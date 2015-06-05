@@ -6,7 +6,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:template match="/">
 <html>
 	<head>
-		<link href="style.php" rel="stylesheet" type="text/CSS" />
+		<link href="style.css" rel="stylesheet" type="text/CSS" />
 		<title><xsl:value-of select="root/generals/pagetitle"/></title>
 	</head>
 	<body>
@@ -42,6 +42,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 				</div>
 			</xsl:for-each>
 		</div>
+		<br/><br/><br/><br/><br/><br/>
 		<div id="footer">
 			<span id="backhome">
 				<a href="index.php" class="txtstd section center">Torna alla Home Page</a>
