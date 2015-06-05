@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="files.xsl"?>
+<!-- Elenco dei files e relativa descrizione -->
+<root>
+<generals>
+	<pagetitle>I miei appunti</pagetitle>
+	<pagedescription>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar sit amet ligula ut pharetra. Morbi rutrum, risus eget dictum porttitor, lectus neque egestas risus, nec gravida elit nisi eleifend sem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris vel cursus purus. Nullam dignissim dapibus velit. Suspendisse suscipit venenatis justo quis egestas. Fusce vel hendrerit ipsum. Nulla facilisi. Fusce nunc ex, tempus nec cursus at, bibendum non neque.</pagedescription>
+</generals>
+<project>
+	<projectname>Dispense di ETI</projectname>
+	<projectdescription>Le dispense di Teoria degli insiemi scritte da me e Matteo Migliorini</projectdescription>
+	<content>
+		<file>
+			<link>http://poisson.dm.unipi.it/~frascella/</link>
+			<filedescription>Il Frascella</filedescription>
+			<filenotes>Perché devo ancora mettere su i file e devo provare questo script</filenotes>
+		</file>
+		<file>
+			<link>http://www.gmail.com</link>
+			<filedescription>La Dispensa</filedescription>
+			<filenotes>In realtà è Barbieri</filenotes>
+		</file>
+	</content>
+</project>
+<project>
+	<projectname>Seminario di Ultrafiltri</projectname>
+	<projectdescription>Ciò che ho portato al corso di ultrafiltri</projectdescription>
+	<content>
+		<file>
+			<link>http://www.google.com</link>
+			<filedescription>Niente</filedescription>
+			<filenotes>Boh???</filenotes>
+		</file>
+	</content>
+</project>
+</root>
+
