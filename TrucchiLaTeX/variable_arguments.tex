@@ -1,0 +1,20 @@
+\documentclass{article}
+\usepackage{etoolbox}% http://ctan.org/pkg/etoolbox
+
+\makeatletter
+\newcommand{\system}[1][]{% Use a declaration
+  $\left\{ \begin{array}{c}  \gobblenext }
+\newcommand{\gobblenext}[1]{#1\@ifnextchar\bgroup{\\ \gobblenext}{ \end{array} \right.$ }}% Gobble next "argument"
+\makeatother
+
+% declare some interface routines
+
+\begin{document}
+
+\system{foo} {p1}{p2}{p3} \textbf{dkl}
+\system{bar}{p1}{p2}{p3}{p4}{p1}{p2}{p3}{p4}{p1}{p2}{p3}{p4}{p1}{p2}{p3}{p4}
+  {p1}{p2}{p3}{p4}.\par
+\system[;]{foo}{p1}{p2}{p3}{p4}{p1}{p2}{p3}{p4}{p1}{p2}{p3}{p4}{p1}{p2}{p3}{p4}
+  {p1}{p2}{p3}{p4}.
+
+\end{document}
