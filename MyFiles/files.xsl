@@ -7,14 +7,14 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <html>
 	<head>
 		<link href="style.css" rel="stylesheet" type="text/CSS" />
-		<title><xsl:value-of select="root/generals/pagetitle"/></title>
+		<title><xsl:value-of select="root/pagetitle"/></title>
 	</head>
 	<body>
 
 		<div id="pagecontainer">
 
-			<h2 class="section txthuge center"><xsl:value-of select="root/generals/pagetitle"/></h2>
-			<p class="txtstd text gray justify"><xsl:value-of select="root/generals/pagedescription"/></p>
+			<h2 class="section txthuge center"><xsl:value-of select="root/pagetitle"/></h2>
+			<p class="txtstd text gray justify"><xsl:value-of select="root/pagedescription"/></p>
 
 			<xsl:for-each select="root/project">
 				
