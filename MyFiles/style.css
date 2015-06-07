@@ -16,7 +16,7 @@ a:visited {text-decoration: none; color: #0000A0; font-weight: 600; }
 a:visited:hover {text-decoration: none; color: #1F45FC; font-weight: 650; }
 
 #footer {position: fixed; right: auto; left: auto; bottom: 10px; margin: 5px 10px; }
-#backhome {position: relative; margin: 0px 10px; padding: 5px 10px; border-radius: 5px; }
+.footcont {position: relative; margin: 0px 10px; padding: 5px 10px; border-radius: 5px; }
 
 table {border: 0px; }
 table tbody tr td {padding: 3px 7px; margin: 1px 10px; }

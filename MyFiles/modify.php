@@ -67,6 +67,14 @@
 			</tbody></table>
 		</form>
 		</div>
+	
+	<div id="footer">
+		<span class="footcont">
+			<a href="files.xml">Pagina Appunti</a>
+		</span>
+	</div>
+	</body>
+	</html>
 	<?php
 		exit(1);
 	}
@@ -122,7 +130,7 @@
 	if (isset($_POST['modfileid'])) {
 		$thisfile = searchFileById($_POST['modfileid']);
 		$thisfile->link = $_POST['newfilelink'];
-		$thisfile->filedescription = utf8_encode($_POST['newfiledescription']);
+		$thisfile->filedescription = $_POST['newfiledescription'];
 		$thisfile->filenotes = $_POST['newfilenotes'];
 		$xml->asXML($xmlfile);
 ?><p class="txtstd text gray center">File modificato con successo</p><?php	
@@ -209,5 +217,11 @@
 			</ul>
 	<?php
 ?>
+
+	<div id="footer">
+		<span class="footcont">
+			<a href="files.xml">Pagina Appunti</a>
+		</span>
+	</div>
 	</body>
 </html>

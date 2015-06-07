@@ -20,7 +20,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 				
 				<div class="topbottomseparate">
 				<h3 class="section txtbig left"><xsl:value-of select="projectname"/></h3>
-
+				<p class="txtstd text gray justify"><xsl:value-of select="projectdescription"/></p>
 				<table border="0">
 				<tbody>
 					<xsl:for-each select="content/file">
@@ -44,8 +44,11 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 		</div>
 		<br/><br/><br/><br/><br/><br/>
 		<div id="footer">
-			<span id="backhome">
+			<span class="footcont">
 				<a href="index.php" class="txtstd section center">Torna alla Home Page</a>
+			</span>
+			<span class="footcont">
+				<a href="modify.php" class="txtstd section center">Modifica pagina</a>
 			</span>
 		</div>
 	</body>
