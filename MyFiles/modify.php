@@ -18,7 +18,7 @@
 		global $xml;
 		foreach ($xml->xpath("/root/project") as $project)
 			foreach ($project->xpath("content/file") as $file)
-				if ($file->fileid = $fileid)
+				if ($file->fileid == $fileid)
 					return $file;
 		return NULL;
 	}
@@ -31,9 +31,6 @@
 	<body>
 <?php
 	//Script che deve permettere di autenticarsi e modificare/creare/eliminare i progetti ed i files
-
-	echo "Numero Progetti: {$lastprojectid}, Numero files: {$lastfileid}<br/>";
-
 	//Se ci si vuole disconnetere (LOGOUT)
 	if (isset($_GET['logout'])) {
 		unset($_SESSION['auth']);
@@ -73,7 +70,7 @@
 	<?php
 		exit(1);
 	}
-	
+
 	//Operazioni da effettuare prima che l'utente veda la schermata (ad esempio creare un nuovo progetto, creare un nuovo file)
 	//Creiamo un nuovo progetto
 	if (isset($_GET['createnewproject'])) {
@@ -89,7 +86,7 @@
 	}
 
 	//Creiamo un nuovo file
-	if (isset($_GET['createnewfileinproject']) {
+	if (isset($_GET['createnewfileinproject'])) {
 		$thisproject = searchProjectById($_GET['createnewfileinproject']);
 		$thisfileid = $lastfileid + 1;
 		$newfile = $thisproject->content->addChild("file");
@@ -125,7 +122,7 @@
 	if (isset($_POST['modfileid'])) {
 		$thisfile = searchFileById($_POST['modfileid']);
 		$thisfile->link = $_POST['newfilelink'];
-		$thisfile->filedescription = $_POST['newfiledescription'];
+		$thisfile->filedescription = utf8_encode($_POST['newfiledescription']);
 		$thisfile->filenotes = $_POST['newfilenotes'];
 		$xml->asXML($xmlfile);
 ?><p class="txtstd text gray center">File modificato con successo</p><?php	
@@ -163,6 +160,7 @@
 
 	//Modifica del file
 	if (isset($_GET['file'])) {
+		echo "fileid: {$_GET['file']}";
 		$thisfile = searchFileById($_GET['file']);
 ?>
 	<form action="<?= $_SERVER['PHP_SELF'] ?>" method="POST">
@@ -188,7 +186,7 @@
 <?php
 		//Se si è selezionato un progetto, allora mostra l'elenco dei file / AGGIUNGI NUOVO FILE / MODIFICA TITOLO PROGETTO	
 		foreach ($thisproject->xpath("content/file") as $file) {
-?>		<a href="<?= $_SERVER['PHP_SELF'] ?>?file=<?= $file->fileid ?>?project=<?= $thisproject->projectid ?>"><li><?= $file->filedescription ?></li></a>
+?>		<a href="<?= $_SERVER['PHP_SELF'] ?>?file=<?= $file->fileid ?>&project=<?= $thisproject->projectid ?>"><li><?= $file->filedescription ?></li></a>
 	<?php } ?>
 		<li><a href="<?= $_SERVER['PHP_SELF'] ?>?file=<?= $lastfileid+1 ?>&project=<?= $thisproject->projectid ?>&createnewfileinproject=<?= $thisproject->projectid ?>">AGGIUNGI NUOVO FILE</a></li>
 		<li><a href="<?= $_SERVER['PHP_SELF'] ?>?project=<?= $thisproject->projectid ?>&modprojecttitle=<?= $thisproject->projectid ?>">MODIFICA TITOLO / DESCRIZIONE PROGETTO</a></li>
