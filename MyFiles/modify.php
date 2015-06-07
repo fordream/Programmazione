@@ -23,6 +23,41 @@
 					return $file;
 		return NULL;
 	}
+
+	function getProjectOfFile ($fileid) {
+		global $xml;
+		foreach ($xml->xpath("/root/project") as $project)
+			foreach ($project->xpath("content/file") as $file)
+				if ($file->fileid == $fileid)
+					return $project;
+		return NULL;
+	}
+
+	function deleteNonEmptyDir($dir) 
+	{
+	   if (is_dir($dir)) 
+	   {
+		$objects = scandir($dir);
+
+		foreach ($objects as $object) 
+		{
+		    if ($object != "." && $object != "..") 
+		    {
+		        if (is_dir($dir . DIRECTORY_SEPARATOR . $object))
+		        {
+		            deleteNonEmptyDir($dir . DIRECTORY_SEPARATOR . $object); 
+		        }
+		        else
+		        {
+		            unlink($dir . DIRECTORY_SEPARATOR . $object);
+		        }
+		    }
+		}
+
+		reset($objects);
+		rmdir($dir);
+	    }
+	}
 ?>
 <html>
 	<head>
@@ -91,6 +126,9 @@
 		$newproject->addChild("content");
 		$xml->lastprojectid = $thisprojid;
 		$xml->asXML($xmlfile);
+		$directory = ".".DIRECTORY_SEPARATOR.$thisprojid;
+		echo "Creazione cartella {$directory}";
+		mkdir($directory);
 ?><p class="txtstd gray text center">Progetto aggiunto</p><?php
 	}
 
@@ -105,6 +143,9 @@
 		$newfile->addChild("filenotes", "");
 		$xml->lastfileid = $thisfileid;
 		$xml->asXML($xmlfile);
+		$directory = ".".DIRECTORY_SEPARATOR.$thisproject->projectid.DIRECTORY_SEPARATOR.$thisfileid;
+		echo "Creazione cartella {$directory}";
+		mkdir($directory);
 ?><p class="txtstd gray text center">File aggiunto</p><?php
 	}
 
@@ -139,9 +180,13 @@
 
 	//Eliminazione effettiva del file
 	if (isset($_POST['delfileid'])) {
+		$thisproject = getProjectOfFile($_POST['delfileid']);
 		$thisfile = searchFileById($_POST['delfileid']);
 		unset($thisfile[0]);
 		$xml->asXML($xmlfile);
+		$directory = ".".DIRECTORY_SEPARATOR.$thisproject->projectid.DIRECTORY_SEPARATOR.$_POST['delfileid'];
+		echo "Deleting {$directory}";
+		deleteNonEmptyDir($directory);
 ?><p class="txtstd text gray center">File definitivamente eliminato</p><?php
 	}
 
@@ -150,6 +195,9 @@
 		$thisproject = searchProjectById($_POST['delprojectid']);
 		unset($thisproject[0]);
 		$xml->asXML($xmlfile);
+		$directory = ".".DIRECTORY_SEPARATOR.$_POST['delprojectid'];
+		echo "Deleting {$directory}";
+		deleteNonEmptyDir($directory);
 ?><p class="txtstd text gray center">Progetto definitivamente eliminato</p><?php
 	}
 

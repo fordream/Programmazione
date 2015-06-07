@@ -2,41 +2,9 @@
 <?xml-stylesheet type="text/xsl" href="files.xsl"?>
 <!-- Elenco dei files e relativa descrizione -->
 <root>
-<lastprojectid>2</lastprojectid>
-<lastfileid>3</lastfileid>
-<pagetitle>I miei appunti</pagetitle>
-<pagedescription>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar sit amet ligula ut pharetra. Morbi rutrum, risus eget dictum porttitor, lectus neque egestas risus, nec gravida elit nisi eleifend sem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris vel cursus purus. Nullam dignissim dapibus velit. Suspendisse suscipit venenatis justo quis egestas. Fusce vel hendrerit ipsum. Nulla facilisi. Fusce nunc ex, tempus nec cursus at, bibendum non neque.</pagedescription>
-<project>
-	<projectid>1</projectid>
-	<projectname>Dispense di ETI</projectname>
-	<projectdescription>Le dispense di Teoria degli insiemi scritte da me e Matteo Migliorini</projectdescription>
-	<content>
-		<file>
-			<fileid>1</fileid>
-			<link>http://poisson.dm.unipi.it/~frascella/</link>
-			<filedescription>Il Frascella</filedescription>
-			<filenotes>Perché devo ancora mettere su i file e devo provare questo script</filenotes>
-		</file>
-		<file>
-			<fileid>2</fileid>
-			<link>http://www.gmail.com</link>
-			<filedescription>La Dispensa</filedescription>
-			<filenotes>In realtà è Barbieri</filenotes>
-		</file>
-	</content>
-</project>
-<project>
-	<projectid>2</projectid>
-	<projectname>Seminario di Ultrafiltri</projectname>
-	<projectdescription>Ciò che ho portato al corso di ultrafiltri</projectdescription>
-	<content>
-		<file>
-			<fileid>3</fileid>
-			<link>http://www.google.com</link>
-			<filedescription>Niente</filedescription>
-			<filenotes>Boh???</filenotes>
-		</file>
-	</content>
-</project>
+<lastprojectid>0</lastprojectid>
+<lastfileid>0</lastfileid>
+<pagetitle></pagetitle>
+<pagedescription></pagedescription>
 </root>
 
