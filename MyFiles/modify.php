@@ -5,7 +5,22 @@
 	$xml = simplexml_load_file($xmlfile);
 	$lastprojectid = $xml->lastprojectid;
 	$lastfileid = $xml->lastfileid;
-	$rightuser = "dario"; $rightpass = "dario";
+
+	if (!file_exists("config.php")) {
+?>
+	<html>
+		<head>
+			<link href="style.css" rel="stylesheet" type="text/CSS" />
+			<title>MyFiles - Non installato</title>
+		</head>
+		<body>
+			<a href="install.php">Devi ancora installare MyFiles. Clicca Qui per procedere</a>
+		</body>
+	</html>
+<?php
+		exit(1);
+	}
+	include 'config.php';
 	
 	function searchProjectById ($projid) {
 		global $xml;
@@ -66,6 +81,14 @@
 	</head>
 	<body>
 <?php
+	if (isset($_GET['afterinstallation'])) {
+		if (file_exists("install.php"))
+			unlink("install.php");
+?>
+	<p class="txtstd text gray center">Grazie per aver installato MyFiles. Buon Lavoro</p>
+<?php
+	}
+
 	//Script che deve permettere di autenticarsi e modificare/creare/eliminare i progetti ed i files
 	//Se ci si vuole disconnetere (LOGOUT)
 	if (isset($_GET['logout'])) {
@@ -78,7 +101,7 @@
 
 	//Se si sta cercando di autenticarsi
 	if (!isset($_SESSION['auth']) && isset($_POST['username']) && isset($_POST['password'])) {
-		if ($_POST['username'] == $rightuser && $_POST['password'] == $rightpass) {
+		if (md5($_POST['username']) == $rightuser && md5($_POST['password']) == $rightpass) {
 			//Autenticazione andata a buon fine, ricordiamocelo
 			$_SESSION['auth'] = "si";
 		} else {
@@ -127,7 +150,6 @@
 		$xml->lastprojectid = $thisprojid;
 		$xml->asXML($xmlfile);
 		$directory = ".".DIRECTORY_SEPARATOR.$thisprojid;
-		echo "Creazione cartella {$directory}";
 		mkdir($directory);
 ?><p class="txtstd gray text center">Progetto aggiunto</p><?php
 	}
@@ -144,9 +166,25 @@
 		$xml->lastfileid = $thisfileid;
 		$xml->asXML($xmlfile);
 		$directory = ".".DIRECTORY_SEPARATOR.$thisproject->projectid.DIRECTORY_SEPARATOR.$thisfileid;
-		echo "Creazione cartella {$directory}";
 		mkdir($directory);
 ?><p class="txtstd gray text center">File aggiunto</p><?php
+	}
+
+	//Upload del file
+	if (isset($_GET['upload'])) {
+		
+		$thisfile = searchFileById($_GET['thefileid']);
+		$thisproject = getProjectOfFile($_GET['thefileid']);
+		$lol = basename($_FILES['uploadfile']['name']);
+		$targetdir = ".".DIRECTORY_SEPARATOR.$thisproject->projectid.DIRECTORY_SEPARATOR.$_GET['thefileid'];
+		$targetfile = $targetdir.DIRECTORY_SEPARATOR.basename($_FILES['uploadfile']["name"]);
+		if (move_uploaded_file($_FILES['uploadfile']["tmp_name"], $targetfile)) {
+?><p class="txtstd text gray center">File caricato con successo</p><?php
+			$thisfile->link = "http://".$_SERVER['SERVER_NAME'].dirname(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)).DIRNAME_SEPARATOR.$thisproject[0]->projectid.DIRNAME_SEPARATOR.$thisfile[0]->fileid.DIRNAME_SEPARATOR.basename($_FILES['uploadfile']['name']);
+			$xml->asXML($xmlfile);
+		} else {
+?><p class="txtstd text gray center">File NON caricato. Errore</p><?php
+		}
 	}
 
 	//Modifica effettiva del titolo della pagina
@@ -185,7 +223,6 @@
 		unset($thisfile[0]);
 		$xml->asXML($xmlfile);
 		$directory = ".".DIRECTORY_SEPARATOR.$thisproject->projectid.DIRECTORY_SEPARATOR.$_POST['delfileid'];
-		echo "Deleting {$directory}";
 		deleteNonEmptyDir($directory);
 ?><p class="txtstd text gray center">File definitivamente eliminato</p><?php
 	}
@@ -196,7 +233,6 @@
 		unset($thisproject[0]);
 		$xml->asXML($xmlfile);
 		$directory = ".".DIRECTORY_SEPARATOR.$_POST['delprojectid'];
-		echo "Deleting {$directory}";
 		deleteNonEmptyDir($directory);
 ?><p class="txtstd text gray center">Progetto definitivamente eliminato</p><?php
 	}
@@ -259,7 +295,6 @@
 
 	//Modifica del file
 	if (isset($_GET['file'])) {
-		echo "fileid: {$_GET['file']}";
 		$thisfile = searchFileById($_GET['file']);
 ?>
 	<form accept-charset="utf-8" action="<?= $_SERVER['PHP_SELF'] ?>?project=<?= $_GET['project'] ?>" method="POST">
@@ -269,6 +304,14 @@
 			<tr><td>Titolo file:</td><td><input type="text" name="newfiledescription" value="<?= $thisfile->filedescription ?>" size="100"/></td></tr>
 			<tr><td>Note al file:</td><td><textarea rows="20" cols="100" name="newfilenotes"><?= $thisfile->filenotes ?></textarea></td></tr>
 			<tr><td colspan="2"><input type="hidden" name="modfileid" value="<?= $thisfile->fileid ?>"/><button>Modifica File</button></td></tr>
+		</tbody></table>
+	</form>
+	<br/><br/>
+	<p class="txtbig section center">Upload rapido del file</p>
+	<form accept-charset="utf-8" action="<?= $_SERVER['PHP_SELF'] ?>?project=<?= $_GET['project'] ?>&upload&thefileid=<?= $thisfile->fileid ?>&file=<?= $_GET['file'] ?>" method="POST" enctype="multipart/form-data">
+		<table><tbody>
+			<tr><td>File da uploadare:</td><td><input type="file" name="uploadfile"/></td></tr>
+			<tr><td colspan="2"><button>Salva File</button></td></tr>
 		</tbody></table>
 	</form>
 	<ul><li><a href="<?= $_SERVER['PHP_SELF'] ?>?delfile=<?= $thisfile->fileid ?>&project=<?= $_GET['project'] ?>">ELIMINA IL FILE (DEFINITIVO)</a></li></ul>
