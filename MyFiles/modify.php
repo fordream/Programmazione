@@ -7,13 +7,15 @@
 	$rightuser = "dario"; $rightpass = "dario";
 	
 	function searchProjectById ($projid) {
+		global $xml;
 		foreach ($xml->xpath("/root/project") as $project)
 			if ($project->projectid == $projid)
-				return $project;
+				{return $project; break; }
 		return NULL;
 	}
 
 	function searchFileById ($fileid) {
+		global $xml;
 		foreach ($xml->xpath("/root/project") as $project)
 			foreach ($project->xpath("content/file") as $file)
 				if ($file->fileid = $fileid)
@@ -75,14 +77,29 @@
 	//Operazioni da effettuare prima che l'utente veda la schermata (ad esempio creare un nuovo progetto, creare un nuovo file)
 	//Creiamo un nuovo progetto
 	if (isset($_GET['createnewproject'])) {
-		$thisid = $lastprojectid + 1;
+		$thisprojid = $lastprojectid + 1;
 		$newproject = $xml->addChild("project");
-		$newproject->addChild("projectid", $lastprojectid+1);
-		$newproject->addChild("projectname", "Senza Nome {$thisid}");
+		$newproject->addChild("projectid", $thisprojid);
+		$newproject->addChild("projectname", "Senza Nome {$thisprojid}");
 		$newproject->addChild("projectdescription", "Nessuna Descrizione");
 		$newproject->addChild("content");
-		$xml->lastprojectid = $lastprojectid+1;
+		$xml->lastprojectid = $thisprojid;
 		$xml->asXML($xmlfile);
+?><p class="txtstd gray text center">Progetto aggiunto</p><?php
+	}
+
+	//Creiamo un nuovo file
+	if (isset($_GET['createnewfileinproject']) {
+		$thisproject = searchProjectById($_GET['createnewfileinproject']);
+		$thisfileid = $lastfileid + 1;
+		$newfile = $thisproject->content->addChild("file");
+		$newfile->addChild("fileid", $thisfileid);
+		$newfile->addChild("link", "");
+		$newfile->addChild("filedescription", "File senza nome {$thisfileid}");
+		$newfile->addChild("filenotes", "");
+		$xml->lastfileid = $thisfileid;
+		$xml->asXML($xmlfile);
+?><p class="txtstd gray text center">File aggiunto</p><?php
 	}
 
 	//Modifica effettiva del titolo della pagina
@@ -96,8 +113,22 @@
 	}
 
 	//Modifica effettiva del nome del progetto
-	if (isset($_POST['newprojecttitle'])) {
-		
+	if (isset($_POST['modprojectid'])) {
+		$thisproject = searchProjectById($_POST['modprojectid']);
+		$thisproject->projectname = $_POST['newprojecttitle'];
+		$thisproject->projectdescription = $_POST['newprojectdescription'];
+		$xml->asXML($xmlfile);
+?><p class="txtstd text gray center">Progetto modificato con successo</p><?php
+	}
+
+	//Modifica effettiva del file
+	if (isset($_POST['modfileid'])) {
+		$thisfile = searchFileById($_POST['modfileid']);
+		$thisfile->link = $_POST['newfilelink'];
+		$thisfile->filedescription = $_POST['newfiledescription'];
+		$thisfile->filenotes = $_POST['newfilenotes'];
+		$xml->asXML($xmlfile);
+?><p class="txtstd text gray center">File modificato con successo</p><?php	
 	}
 
 
@@ -117,15 +148,33 @@
 
 	//Modifica del titolo del progetto
 	if (isset($_GET['modprojecttitle'])) {
+		$thisproject = searchProjectById($_GET['modprojecttitle']);
 ?>
 	<form action="<?= $_SERVER['PHP_SELF'] ?>" method="POST">
-		<p class="txtbig section center">Modifica titolo del progetto</p>
+		<p class="txtbig section center">Modifica titolo e descrizione del progetto <?= $thisproject->projectname ?></p>
 		<table><tbody>
-			<tr><td></td><td></td></tr>
-			
+			<tr><td>Titolo:</td><td><input type="text" name="newprojecttitle" value="<?= $thisproject->projectname ?>" size="100"/></td></tr>
+			<tr><td>Descrizione:</td><td><textarea rows="20" cols="100" name="newprojectdescription"><?= $thisproject->projectdescription ?></textarea></td></tr>
+			<tr><td colspan="2"><input type="hidden" name="modprojectid" value="<?= $thisproject->projectid ?>"/><button>Modifica</button></td></tr>
 		</tbody></table>
 	</form>
 <?php	
+	}
+
+	//Modifica del file
+	if (isset($_GET['file'])) {
+		$thisfile = searchFileById($_GET['file']);
+?>
+	<form action="<?= $_SERVER['PHP_SELF'] ?>" method="POST">
+		<p class="txtbig section center">Modifica del file <?= $thisfile->filedescription ?></p>
+		<table><tbody>
+			<tr><td>Link al file:</td><td><input type="text" name="newfilelink" value="<?= $thisfile->link ?>" size="100"/></td></tr>
+			<tr><td>Titolo file:</td><td><input type="text" name="newfiledescription" value="<?= $thisfile->filedescription ?>" size="100"/></td></tr>
+			<tr><td>Note al file:</td><td><textarea rows="20" cols="100" name="newfilenotes"><?= $thisfile->filenotes ?></textarea></td></tr>
+			<tr><td colspan="2"><input type="hidden" name="modfileid" value="<?= $thisfile->fileid ?>"/><button>Modifica File</button></td></tr>
+		</tbody></table>
+	</form>
+<?php
 	}
 
 
@@ -142,7 +191,7 @@
 ?>		<a href="<?= $_SERVER['PHP_SELF'] ?>?file=<?= $file->fileid ?>?project=<?= $thisproject->projectid ?>"><li><?= $file->filedescription ?></li></a>
 	<?php } ?>
 		<li><a href="<?= $_SERVER['PHP_SELF'] ?>?file=<?= $lastfileid+1 ?>&project=<?= $thisproject->projectid ?>&createnewfileinproject=<?= $thisproject->projectid ?>">AGGIUNGI NUOVO FILE</a></li>
-		<li><a href="<?= $_SERVER['PHP_SELF'] ?>?project=<?= $thisproject->projectid ?>&modprojecttitle">MODIFICA TITOLO PROGETTO</a></li>
+		<li><a href="<?= $_SERVER['PHP_SELF'] ?>?project=<?= $thisproject->projectid ?>&modprojecttitle=<?= $thisproject->projectid ?>">MODIFICA TITOLO / DESCRIZIONE PROGETTO</a></li>
 	</ul>
 <?php
 	}
