@@ -3,15 +3,15 @@
 
 \makeatletter
 \newcommand{\system}[1][]{% Use a declaration
-  $\left\{ \begin{array}{c}  \gobblenext }
-\newcommand{\gobblenext}[1]{#1\@ifnextchar\bgroup{\\ \gobblenext}{ \end{array} \right.$ }}% Gobble next "argument"
+  \[\left\{ \begin{array}{c} \gobblenext }
+\newcommand{\gobblenext}[1]{#1\@ifnextchar\bgroup{\\ \gobblenext}{ \end{array} \right.\] }}% Gobble next "argument"
 \makeatother
 
 % declare some interface routines
 
 \begin{document}
 
-\system{foo} {p1}{p2}{p3} \textbf{dkl}
+\system{foo} {$y(x_0) = C^{*}$}{$y' = y(x)$}{p3} \textbf{dkl}
 \system{bar}{p1}{p2}{p3}{p4}{p1}{p2}{p3}{p4}{p1}{p2}{p3}{p4}{p1}{p2}{p3}{p4}
   {p1}{p2}{p3}{p4}.\par
 \system[;]{foo}{p1}{p2}{p3}{p4}{p1}{p2}{p3}{p4}{p1}{p2}{p3}{p4}{p1}{p2}{p3}{p4}
