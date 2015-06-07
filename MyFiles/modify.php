@@ -6,6 +6,9 @@
 	$lastprojectid = $xml->lastprojectid;
 	$lastfileid = $xml->lastfileid;
 
+	if (!file_exists($xmlfile)) {
+		file_put_contents($xmlfile, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<?xml-stylesheet type=\"text/xsl\" href=\"files.xsl\"?>\n<!-- Elenco dei files e relativa descrizione -->\n<root>\n<lastprojectid>0</lastprojectid>\n<lastfileid>0</lastfileid>\n<homepage>/</homepage>\n<pagetitle></pagetitle>\n<pagedescription></pagedescription>\n</root>");
+	}
 	if (!file_exists("config.php")) {
 ?>
 	<html>
@@ -20,6 +23,10 @@
 <?php
 		exit(1);
 	}
+	if (file_exists("install.php")) {
+		unlink("install.php");
+	}
+
 	include 'config.php';
 	
 	function searchProjectById ($projid) {
@@ -180,7 +187,7 @@
 		$targetfile = $targetdir.DIRECTORY_SEPARATOR.basename($_FILES['uploadfile']["name"]);
 		if (move_uploaded_file($_FILES['uploadfile']["tmp_name"], $targetfile)) {
 ?><p class="txtstd text gray center">File caricato con successo</p><?php
-			$thisfile->link = "http://".$_SERVER['SERVER_NAME'].dirname(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)).DIRNAME_SEPARATOR.$thisproject[0]->projectid.DIRNAME_SEPARATOR.$thisfile[0]->fileid.DIRNAME_SEPARATOR.basename($_FILES['uploadfile']['name']);
+			$thisfile->link = "http://" . $_SERVER['SERVER_NAME'] . dirname(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)) . DIRECTORY_SEPARATOR . $thisproject[0]->projectid . DIRECTORY_SEPARATOR . $thisfile[0]->fileid . DIRECTORY_SEPARATOR . basename($_FILES['uploadfile']['name']);
 			$xml->asXML($xmlfile);
 		} else {
 ?><p class="txtstd text gray center">File NON caricato. Errore</p><?php
@@ -191,6 +198,7 @@
 	if (isset($_POST['newpagetitle']) && isset($_POST['newpagedescription'])) {
 		$xml->pagetitle = $_POST['newpagetitle'];
 		$xml->pagedescription = $_POST['newpagedescription'];
+		$xml->homepage = $_POST['newpagehomeredirect'];
 		$xml->asXML($xmlfile);
 ?>
 	<p class="txtstd text gray center">Titolo della pagina modificato con successo</p>
@@ -269,8 +277,9 @@
 ?>
 	<form accept-charset="utf-8" action="<?= $_SERVER['PHP_SELF'] ?>" method="POST">
 		<table><tbody>
-			<tr><td>Titolo Pagina:</td><td><input type="text" name="newpagetitle" value="<?= $xml->pagetitle ?>" size="100"/></td>
+			<tr><td>Titolo Pagina:</td><td><input type="text" name="newpagetitle" value="<?= $xml->pagetitle ?>" size="100"/></td></tr>
 			<tr><td>Descrizione:</td><td><textarea rows="20" name="newpagedescription" cols="100"><?= $xml->pagedescription ?></textarea></td></tr>
+			<tr><td>Home Page redirect:</td><td><input type="text" name="newpagehomeredirect" cols="100" value="<?= $xml->homepage ?>"/></td></tr>
 			<tr><td colspan="2"><button>Modifica</button></td></tr>
 		</tbody></table>
 	</form>

@@ -9,6 +9,15 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 		<link href="style.css" rel="stylesheet" type="text/CSS" />
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<title><xsl:value-of select="root/pagetitle"/></title>
+		<script type="text/javascript">
+			function toggle (theid) {
+				var el = document.getElementById(theid);
+				if (el.style.display == "inline")
+					el.style.display = "none";
+				else
+					el.style.display = "inline";
+			}
+		</script>
 	</head>
 	<body>
 
@@ -46,12 +55,22 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 		<br/><br/><br/><br/><br/><br/>
 		<div id="footer">
 			<span class="footcont">
-				<a href="index.php" class="txtstd section center">Torna alla Home Page</a>
+				<xsl:element name="a">
+					<xsl:attribute name="href">
+						<xsl:value-of select="root/homepage"/>
+					</xsl:attribute>
+					<xsl:attribute name="class">txtstd section center</xsl:attribute>
+					Torna alla Home Page
+				</xsl:element>
 			</span>
 			<span class="footcont">
 				<a href="modify.php" class="txtstd section center">Modifica pagina</a>
 			</span>
 		</div>
+		<span id="myfilesinfo">
+			<span id="myfilesdownload" style="display: none;"><a class="text txtstd gray" href="https://github.com/trenta3/Programmazione/tree/master/MyFiles">Ottieni anche tu MyFiles</a></span>
+			<span id="myfilesbutton"><button onclick="toggle('myfilesdownload');">#</button></span>
+		</span>
 	</body>
 </html>
 </xsl:template>
