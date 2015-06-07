@@ -7,6 +7,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <html>
 	<head>
 		<link href="style.css" rel="stylesheet" type="text/CSS" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<title><xsl:value-of select="root/pagetitle"/></title>
 	</head>
 	<body>

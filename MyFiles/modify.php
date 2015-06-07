@@ -1,5 +1,6 @@
 <?php
 	session_start();
+	header('Content-Type: text/html; charset=utf-8');
 	$xmlfile = "files.xml";
 	$xml = simplexml_load_file($xmlfile);
 	$lastprojectid = $xml->lastprojectid;
@@ -59,7 +60,7 @@
 		//Non siamo ancora autenticati. Chiediamo nome e password
 	?>
 		<div class="pagecontainer">
-		<form action="<?=$_SERVER['PHP_SELF']?>" method="POST">
+		<form accept-charset="utf-8" action="<?=$_SERVER['PHP_SELF']?>" method="POST">
 			<table><tbody>
 				<tr><td>Username:</td><td><input type="text" name="username" size="40"/></td></tr>
 				<tr><td>Password:</td><td><input type="password" name="password" size="40"/></td></tr>
@@ -136,12 +137,53 @@
 ?><p class="txtstd text gray center">File modificato con successo</p><?php	
 	}
 
+	//Eliminazione effettiva del file
+	if (isset($_POST['delfileid'])) {
+		$thisfile = searchFileById($_POST['delfileid']);
+		unset($thisfile[0]);
+		$xml->asXML($xmlfile);
+?><p class="txtstd text gray center">File definitivamente eliminato</p><?php
+	}
+
+	//Eliminazione effettiva del progetto
+	if (isset($_POST['delprojectid'])) {
+		$thisproject = searchProjectById($_POST['delprojectid']);
+		unset($thisproject[0]);
+		$xml->asXML($xmlfile);
+?><p class="txtstd text gray center">Progetto definitivamente eliminato</p><?php
+	}
+
+	//Conferma di eliminazione del file
+	if (isset($_GET['delfile'])) {
+		$thisfile = searchFileById($_GET['delfile']);
+?>
+		<form accept-charset="utf-8" action="<?= $_SERVER['PHP_SELF'] ?>?project=<?= $_GET['project'] ?>" method="POST">
+			<table><tbody>
+				<tr><td>Titolo File:</td><td><?= $thisfile->filedescription ?></td></tr>
+				<tr><td colspan="2"><input type="hidden" value="<?= $thisfile->fileid ?>" name="delfileid"><button>Elimina definitivamente il file</button></td></tr>
+			</tbody></table>
+		</form>
+<?php
+	}
+
+	//Conferma di eliminazione del progetto
+	if (isset($_GET['delproject'])) {
+		$thisproject = searchProjectById($_GET['delproject']);
+?>
+		<form accept-charset="utf-8" action="<?= $_SERVER['PHP_SELF'] ?>" method="POST">
+			<table><tbody>
+				<tr><td>Titolo Progetto:</td><td><?= $thisproject->projectname ?></td></tr>
+				<tr><td colspan="2"><input type="hidden" value="<?= $thisproject->projectid ?>" name="delprojectid"><button>Elimina definitivamente il progetto (e tutti i suoi file)</button></td></tr>
+			</tbody></table>
+		</form>
+<?php
+	}
 
 
 	//Modifica del titolo della pagina
 	if (isset($_GET['modpagetitle'])) {
 ?>
-	<form action="<?= $_SERVER['PHP_SELF'] ?>" method="POST">
+	<form accept-charset="utf-8" action="<?= $_SERVER['PHP_SELF'] ?>" method="POST">
 		<table><tbody>
 			<tr><td>Titolo Pagina:</td><td><input type="text" name="newpagetitle" value="<?= $xml->pagetitle ?>" size="100"/></td>
 			<tr><td>Descrizione:</td><td><textarea rows="20" name="newpagedescription" cols="100"><?= $xml->pagedescription ?></textarea></td></tr>
@@ -155,7 +197,7 @@
 	if (isset($_GET['modprojecttitle'])) {
 		$thisproject = searchProjectById($_GET['modprojecttitle']);
 ?>
-	<form action="<?= $_SERVER['PHP_SELF'] ?>" method="POST">
+	<form accept-charset="utf-8" action="<?= $_SERVER['PHP_SELF'] ?>" method="POST">
 		<p class="txtbig section center">Modifica titolo e descrizione del progetto <?= $thisproject->projectname ?></p>
 		<table><tbody>
 			<tr><td>Titolo:</td><td><input type="text" name="newprojecttitle" value="<?= $thisproject->projectname ?>" size="100"/></td></tr>
@@ -163,6 +205,7 @@
 			<tr><td colspan="2"><input type="hidden" name="modprojectid" value="<?= $thisproject->projectid ?>"/><button>Modifica</button></td></tr>
 		</tbody></table>
 	</form>
+	<ul><li><a href="<?= $_SERVER['PHP_SELF'] ?>?delproject=<?= $thisproject->projectid ?>">ELIMINA IL PROGETTO (DEFINITIVO)</a></li></ul>
 <?php	
 	}
 
@@ -171,7 +214,7 @@
 		echo "fileid: {$_GET['file']}";
 		$thisfile = searchFileById($_GET['file']);
 ?>
-	<form action="<?= $_SERVER['PHP_SELF'] ?>" method="POST">
+	<form accept-charset="utf-8" action="<?= $_SERVER['PHP_SELF'] ?>?project=<?= $_GET['project'] ?>" method="POST">
 		<p class="txtbig section center">Modifica del file <?= $thisfile->filedescription ?></p>
 		<table><tbody>
 			<tr><td>Link al file:</td><td><input type="text" name="newfilelink" value="<?= $thisfile->link ?>" size="100"/></td></tr>
@@ -180,6 +223,7 @@
 			<tr><td colspan="2"><input type="hidden" name="modfileid" value="<?= $thisfile->fileid ?>"/><button>Modifica File</button></td></tr>
 		</tbody></table>
 	</form>
+	<ul><li><a href="<?= $_SERVER['PHP_SELF'] ?>?delfile=<?= $thisfile->fileid ?>&project=<?= $_GET['project'] ?>">ELIMINA IL FILE (DEFINITIVO)</a></li></ul>
 <?php
 	}
 
@@ -217,7 +261,7 @@
 			</ul>
 	<?php
 ?>
-
+	<br/><br/><br/><br/><br/>
 	<div id="footer">
 		<span class="footcont">
 			<a href="files.xml">Pagina Appunti</a>
