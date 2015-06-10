@@ -1,0 +1,7 @@
+Opzioni disponibili:
+
+- Cambiare colore di testo e section
+
+- Cambiare grandezza dei caratteri
+
+- Cambiare larghezza colonna
