@@ -1,0 +1,59 @@
+require "csv"
+
+# Leggiamo il file del periodo per sapere quando vanno ordinati, e teniamoci un array dei giorni giusti
+periodo = CSV.read("periodo.txt", { :col_sep => "\t"}) - [[]]
+
+# Iniziamo dalla prima data scritta e salviamo i giorni in cui dobbiamo ordinare i giornali.
+# Le condizioni scritte più in fondo sovrascrivono le altre.
+giornigiusti = []
+for (motivo, inizio, fine, daconsiderare) in periodo do
+	raise 'Errore nel file periodo.txt: la data di inizio deve precedere quella di fine periodo' if (Date.strptime(inizio, '%d/%m/%y') <=> Date.strptime(fine, '%d/%m/%y')) == 1
+	if daconsiderare == 'SI' then
+		# Aggiungiamo all'array tutti i giorni compresi tra gli estremi
+		st = Date.strptime(inizio, '%d/%m/%y')
+		while (st <=> Date.strptime(fine, '%d/%m/%y')) < 1 do
+			giornigiusti = giornigiusti | [st]
+			st = st.next
+		end
+		puts "Condizione aggiunta: Giorni totali #{giornigiusti.size}"
+	elsif daconsiderare == 'NO' then
+		# Togliamo all'array tutti i giorni compresi tra gli estremi
+		st = Date.strptime(inizio, '%d/%m/%y')
+		while (st <=> Date.strptime(fine, '%d/%m/%y')) < 1 do
+			giornigiusti = giornigiusti - [st]
+			st = st.next
+		end
+		puts "Condizione aggiunta: Giorni totali #{giornigiusti.size}"
+	else
+		raise 'Errore nel file periodo.txt: la quarta colonna puo\' contenere solo SI/NO'
+	end
+end
+
+# Predisponiamo un hash dove vengono scritti il nome del giornale e quante copie bisogna comprarne
+giornali = {}
+# Ora leggiamo gli ordini e salviamo i nomi dei giornali
+ordini = CSV.read("ordine.txt", { :col_sep => "\t"}) - [[]]
+for (nome, lun, mar, mer, giov, ven, sab, dom, costo) in ordini do
+	puts "Aggiunto conteggio giornali di #{nome}"
+	giornali[nome] = 0
+end
+# Ora, per ogni giorno, vediamo quali giornali sono da comprare in quel giorno e li aumentiamo di uno
+for data in giornigiusti do
+	for g in ordini do
+		if g[data.cwday] == 'X' then
+			# Il giornale va acquistato
+			giornali[g[0]] += 1
+		end
+		raise "Crocetta invalida in giornale #{g[0]}, giorno #{data.cwday}. Si possono fare solo \'X\' o lasciare vuoto" if g[data.cwday] != 'X' and g[data.cwday] != nil
+	end
+end
+
+# Alla fine scriviamo in un file per ogni giornale quante volte viene acquistato e quanto costa in totale
+CSV.open("ordinefinale.txt", "wb", { :col_sep => "\t"}) do |csv|
+		csv << ["Nome giornale", "Numero di copie da acquistare", "Costo di ogni copia", "Costo complessivo"]
+	for (nome, lun, mar, mer, giov, ven, sab, dom, costo) in ordini do
+		costocomplessivo = ((costo.gsub(/,/, '.').to_f)*giornali[nome])
+		csv << [nome, giornali[nome], costo.gsub(/,/, '.'), sprintf("%.2f", costocomplessivo)]
+	end
+end
+puts 'Ordine finale salvato in ordinefinale.txt'
