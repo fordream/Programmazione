@@ -5,3 +5,13 @@ Opzioni disponibili:
 - Cambiare grandezza dei caratteri
 
 - Cambiare larghezza colonna
+
+- Dividere le sezioni da <hr/>
+
+COLORI PREDEFINITI:
+backgroundcolor		E5E4E2
+sectioncolor		15317E
+textcolor		368BC1
+linkcolor		0000A0
+hovercolor		1F45FC
+

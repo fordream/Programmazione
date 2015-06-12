@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<xsl:stylesheet version="1.0"
-xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <xsl:template match="/">
 <html>
 	<head>
-		<link href="style.css" rel="stylesheet" type="text/CSS" />
+		<link http-equiv="Content-Style-Type" type="text/CSS" href="style.php" charset="utf-8" rel="stylesheet" />
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<title><xsl:value-of select="root/pagetitle"/></title>
 		<script type="text/javascript">

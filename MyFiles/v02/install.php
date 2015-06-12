@@ -3,7 +3,7 @@
 ?>
 <html>
 	<head>
-		<link href="style.css" rel="stylesheet" type="text/CSS" />
+		<link href="style.php" rel="stylesheet" type="text/CSS" />
 		<title>MyFiles - Pagina di Installazione</title>
 	</head>
 	<body>

@@ -1,19 +1,26 @@
+<?php
+	header("Content-type: text/CSS; charset=utf-8");
+	$xmlfile = "files.xml";
+	$xml = simplexml_load_file($xmlfile);
+	$options = $xml->options;
+?>
 
 
-
-body { background-color: #E5E4E2; }
+body { background-color: #<?= $options->backgroundcolor ?>; text-align: center; }
+form {display: inline-block; }
+ul, p {text-align: left; }
 #pagecontainer { margin-left: 20%; margin-right: 20%; margin-top: 50px; }
 
 .text {font-family: Times New Roman, serif; font-weight: 500; }
-.section {font-family: Verdana, sans-serif; font-weight: 700; color: #15317E; }
+.section {font-family: Verdana, sans-serif; font-weight: 700; color: #<?= $options->sectioncolor ?>; }
 
 .black {color: black; }
-.gray {color: #368BC1; }
+.gray {color: #<?= $options->textcolor ?>; }
 
-a {text-decoration: none; color: #0000A0; font-weight: 600; }
-a:hover {text-decoration: none; color: #1F45FC; font-weight: 650; }
-a:visited {text-decoration: none; color: #0000A0; font-weight: 600; }
-a:visited:hover {text-decoration: none; color: #1F45FC; font-weight: 650; }
+a {text-decoration: none; color: #<?= $options->linkcolor ?>; font-weight: 600; }
+a:hover {text-decoration: none; color: #<?= $options->hovercolor ?>; font-weight: 650; }
+a:visited {text-decoration: none; color: #<?= $options->linkcolor ?>; font-weight: 600; }
+a:visited:hover {text-decoration: none; color: #<?= $options->hovercolor ?>; font-weight: 650; }
 
 #footer {position: fixed; right: auto; left: auto; bottom: 10px; margin: 5px 10px; }
 .footcont {position: relative; margin: 0px 10px; padding: 5px 10px; border-radius: 5px; }

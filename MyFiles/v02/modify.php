@@ -7,14 +7,13 @@
 	$lastfileid = $xml->lastfileid;
 
 	if (!file_exists($xmlfile)) {
-		file_put_contents($xmlfile, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<?xml-stylesheet type=\"text/xsl\" href=\"files.xsl\"?>\n<!-- Elenco dei files e relativa descrizione -->\n<root>\n<lastprojectid>0</lastprojectid>\n<lastfileid>0</lastfileid>\n<options></options>\n<homepage>/</homepage>\n<pagetitle></pagetitle>\n<pagedescription></pagedescription>\n</root>");
+		file_put_contents($xmlfile, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<?xml-stylesheet type=\"text/xsl\" href=\"files.xsl\"?>\n<!-- Elenco dei files e relativa descrizione -->\n<root>\n<lastprojectid>0</lastprojectid>\n<lastfileid>0</lastfileid>\n<options><backgroundcolor>E5E4E2</backgroundcolor><sectioncolor>15317E</sectioncolor><textcolor>368BC1</textcolor><linkcolor>0000A0</linkcolor><hovercolor>1F45FC</hovercolor></options>\n<homepage>/</homepage>\n<pagetitle></pagetitle>\n<pagedescription></pagedescription>\n</root>");
 	}
-	if (!file_exists($
 	if (!file_exists("config.php")) {
 ?>
 	<html>
 		<head>
-			<link href="style.css" rel="stylesheet" type="text/CSS" />
+			<link href="style.php" rel="stylesheet" type="text/CSS" />
 			<title>MyFiles - Non installato</title>
 		</head>
 		<body>
@@ -84,10 +83,11 @@
 ?>
 <html>
 	<head>
-		<link href="style.css" rel="stylesheet" type="text/CSS" />
+		<link href="style.php" rel="stylesheet" type="text/CSS" />
 		<title>MyFiles - Modifica Pagina</title>
 	</head>
 	<body>
+		<script type="text/javascript" src="colorpicker/jscolor.js"></script>
 <?php
 	if (isset($_GET['afterinstallation'])) {
 		if (file_exists("install.php"))
@@ -103,7 +103,7 @@
 		unset($_SESSION['auth']);
 		session_destroy();
 ?>
-	<p class="txtstd text gray center">Disconnessione avvenuta con successo</p><br/><br/>
+	<p class="txtstd text gray center">Disconnessione avvenuta con successo</p><hr/><br/><br/>
 <?php
 	}
 
@@ -116,7 +116,7 @@
 			//Autenticazione Fallita
 			unset($_POST['username']); unset($_POST['password']);
 		?>
-		<p class="txtstd text gray center">Autenticazione Fallita. Riprovare</p><br/><br/>
+		<p class="txtstd text gray center">Autenticazione Fallita. Riprovare</p><hr/><br/><br/>
 		<?php
 		}
 	}
@@ -225,6 +225,18 @@
 ?><p class="txtstd text gray center">File modificato con successo</p><?php	
 	}
 
+	//Modifica effettiva delle opzioni
+	if (isset($_POST['backgroundcolor'])) {
+		$options = $xml->options;
+		$options->backgroundcolor = $_POST['backgroundcolor'];
+		$options->sectioncolor = $_POST['sectioncolor'];
+		$options->textcolor = $_POST['textcolor'];
+		$options->linkcolor = $_POST['linkcolor'];
+		$options->hovercolor = $_POST['hovercolor'];
+		$xml->asXML($xmlfile);
+?><p class="txtstd text gray center">Impostazioni modificate con successo</p><?php
+	}
+
 	//Eliminazione effettiva del file
 	if (isset($_POST['delfileid'])) {
 		$thisproject = getProjectOfFile($_POST['delfileid']);
@@ -255,7 +267,7 @@
 				<tr><td>Titolo File:</td><td><?= $thisfile->filedescription ?></td></tr>
 				<tr><td colspan="2"><input type="hidden" value="<?= $thisfile->fileid ?>" name="delfileid"><button>Elimina definitivamente il file</button></td></tr>
 			</tbody></table>
-		</form>
+		</form><hr/>
 <?php
 	}
 
@@ -268,7 +280,7 @@
 				<tr><td>Titolo Progetto:</td><td><?= $thisproject->projectname ?></td></tr>
 				<tr><td colspan="2"><input type="hidden" value="<?= $thisproject->projectid ?>" name="delprojectid"><button>Elimina definitivamente il progetto (e tutti i suoi file)</button></td></tr>
 			</tbody></table>
-		</form>
+		</form><hr/>
 <?php
 	}
 
@@ -283,7 +295,7 @@
 			<tr><td>Home Page redirect:</td><td><input type="text" name="newpagehomeredirect" cols="100" value="<?= $xml->homepage ?>"/></td></tr>
 			<tr><td colspan="2"><button>Modifica</button></td></tr>
 		</tbody></table>
-	</form>
+	</form><hr/>
 <?php
 	}
 
@@ -299,7 +311,7 @@
 			<tr><td colspan="2"><input type="hidden" name="modprojectid" value="<?= $thisproject->projectid ?>"/><button>Modifica</button></td></tr>
 		</tbody></table>
 	</form>
-	<ul><li><a href="<?= $_SERVER['PHP_SELF'] ?>?delproject=<?= $thisproject->projectid ?>">ELIMINA IL PROGETTO (DEFINITIVO)</a></li></ul>
+	<ul><li><a href="<?= $_SERVER['PHP_SELF'] ?>?delproject=<?= $thisproject->projectid ?>">ELIMINA IL PROGETTO (DEFINITIVO)</a></li></ul><hr/>
 <?php	
 	}
 
@@ -310,8 +322,8 @@
 	<form accept-charset="utf-8" action="<?= $_SERVER['PHP_SELF'] ?>?project=<?= $_GET['project'] ?>" method="POST">
 		<p class="txtbig section center">Modifica del file <?= $thisfile->filedescription ?></p>
 		<table><tbody>
-			<tr><td>Link al file:</td><td><input type="text" name="newfilelink" value="<?= $thisfile->link ?>" size="100"/></td></tr>
-			<tr><td>Titolo file:</td><td><input type="text" name="newfiledescription" value="<?= $thisfile->filedescription ?>" size="100"/></td></tr>
+			<tr><td>Link al file:</td><td><input type="text" name="newfilelink" value="<?= $thisfile->link ?>" size="80"/></td></tr>
+			<tr><td>Titolo file:</td><td><input type="text" name="newfiledescription" value="<?= $thisfile->filedescription ?>" size="80"/></td></tr>
 			<tr><td>Note al file:</td><td><textarea rows="20" cols="100" name="newfilenotes"><?= $thisfile->filenotes ?></textarea></td></tr>
 			<tr><td colspan="2"><input type="hidden" name="modfileid" value="<?= $thisfile->fileid ?>"/><button>Modifica File</button></td></tr>
 		</tbody></table>
@@ -324,7 +336,30 @@
 			<tr><td colspan="2"><button>Salva File</button></td></tr>
 		</tbody></table>
 	</form>
-	<ul><li><a href="<?= $_SERVER['PHP_SELF'] ?>?delfile=<?= $thisfile->fileid ?>&project=<?= $_GET['project'] ?>">ELIMINA IL FILE (DEFINITIVO)</a></li></ul>
+	<ul><li><a href="<?= $_SERVER['PHP_SELF'] ?>?delfile=<?= $thisfile->fileid ?>&project=<?= $_GET['project'] ?>">ELIMINA IL FILE (DEFINITIVO)</a></li></ul><hr/>
+<?php
+	}
+
+	//Modifica delle impostazioni
+	if (isset($_GET['modoptions'])) {
+		$options = $xml->options;
+?>
+		<p class="txtbig section center">Modifica impostazioni</p>
+		<form accept-charset="utf-8" action="<?= $_SERVER['PHP_SELF'] ?>" method="POST">
+			<table><tbody>
+				<tr><td>Colore di sfondo pagina:</td><td><input class="color" name="backgroundcolor" value="<?= $options->backgroundcolor ?>"/></td></tr>
+				<tr><td>Colore dei titoli:</td><td><input class="color" name="sectioncolor" value="<?= $options->sectioncolor ?>"/></td></tr>
+				<tr><td>Colore del testo:</td><td><input class="color" name="textcolor" value="<?= $options->textcolor ?>"/></td></tr>
+				<tr><td>Colore dei link:</td><td><input class="color" name="linkcolor" value="<?= $options->linkcolor ?>"/></td></tr>
+				<tr><td>Colore dei link evidenziati:</td><td><input class="color" name="hovercolor" value="<?= $options->hovercolor ?>"/></td></tr>
+				<tr><td colspan="2"><button>Modifica Impostazioni</button></td></tr>
+			</tbody></table>
+		</form><br/><br/>
+		<form accept-charset="utf-8" action="<?= $_SERVER['PHP_SELF'] ?>" method="POST">
+			<input type="hidden" name="backgroundcolor" value="E5E4E2"/><input type="hidden" name="sectioncolor" value="15317E"/><input type="hidden" name="textcolor" value="368BC1"/><input type="hidden" name="linkcolor" value="0000A0"/><input type="hidden" name="hovercolor" value="1F45FC"/>
+			<button>Ripristina colori Predefiniti</button>
+		</form>
+		<hr/>
 <?php
 	}
 
@@ -343,7 +378,7 @@
 	<?php } ?>
 		<li><a href="<?= $_SERVER['PHP_SELF'] ?>?file=<?= $lastfileid+1 ?>&project=<?= $thisproject->projectid ?>&createnewfileinproject=<?= $thisproject->projectid ?>">AGGIUNGI NUOVO FILE</a></li>
 		<li><a href="<?= $_SERVER['PHP_SELF'] ?>?project=<?= $thisproject->projectid ?>&modprojecttitle=<?= $thisproject->projectid ?>">MODIFICA TITOLO / DESCRIZIONE PROGETTO</a></li>
-	</ul>
+	</ul><hr/>
 <?php
 	}
 
@@ -358,8 +393,9 @@
 	<?php } ?>
 			<li><a href="<?= $_SERVER['PHP_SELF'] ?>?modpagetitle">MODIFICA TITOLO E DESCRIZIONE PAGINA</a></li>
 			<li><a href="<?= $_SERVER['PHP_SELF'] ?>?project=<?= $lastprojectid+1 ?>&createnewproject">CREA NUOVO PROGETTO</a></li>
+			<li><a href="<?= $_SERVER['PHP_SELF'] ?>?modoptions">MODIFICA IMPOSTAZIONI</a></li>
 			<li><a href="<?= $_SERVER['PHP_SELF'] ?>?logout">LOGOUT</a></li>
-			</ul>
+			</ul><hr/>
 	<?php
 ?>
 	<br/><br/><br/><br/><br/>
