@@ -5,11 +5,10 @@
 	$options = $xml->options;
 ?>
 
-
-body { background-color: #<?= $options->backgroundcolor ?>; text-align: center; }
+body { background-color: #<?= $options->backgroundcolor ?>; text-align: center; font-size: <?= $options->globalmag ?>%; }
 form {display: inline-block; }
 ul, p {text-align: left; }
-#pagecontainer { margin-left: 20%; margin-right: 20%; margin-top: 50px; }
+#pagecontainer { margin-left: <?= $options->sxmargin ?>%; margin-right: <?= $options->dxmargin ?>%; margin-top: 50px; }
 
 .text {font-family: Times New Roman, serif; font-weight: 500; }
 .section {font-family: Verdana, sans-serif; font-weight: 700; color: #<?= $options->sectioncolor ?>; }
@@ -26,13 +25,11 @@ a:visited:hover {text-decoration: none; color: #<?= $options->hovercolor ?>; fon
 .footcont {position: relative; margin: 0px 10px; padding: 5px 10px; border-radius: 5px; }
 
 table {border: 0px; }
-table tbody tr td {padding: 3px 7px; margin: 1px 10px; }
+table tbody tr td {padding: 3px 12px; margin: 1px 10px; }
 
-.txtsmall {font-size: small; }
-.txtstd {font-size: 110%; }
-.txtbig {font-size: large; }
-.txthuge {font-size: x-large; }
-.txtgiant {font-size: xx-large; }
+.txtstd {font-size: <?= $options->txtstdmag ?>em; }
+.txtbig {font-size: <?= $options->sectionsmag ?>em; }
+.txthuge {font-size: <?= $options->pagetitlemag ?>em; }
 
 .center {text-align: center; }
 .justify {text-align: justify; }

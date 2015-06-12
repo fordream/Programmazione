@@ -7,7 +7,7 @@
 	$lastfileid = $xml->lastfileid;
 
 	if (!file_exists($xmlfile)) {
-		file_put_contents($xmlfile, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<?xml-stylesheet type=\"text/xsl\" href=\"files.xsl\"?>\n<!-- Elenco dei files e relativa descrizione -->\n<root>\n<lastprojectid>0</lastprojectid>\n<lastfileid>0</lastfileid>\n<options><backgroundcolor>E5E4E2</backgroundcolor><sectioncolor>15317E</sectioncolor><textcolor>368BC1</textcolor><linkcolor>0000A0</linkcolor><hovercolor>1F45FC</hovercolor></options>\n<homepage>/</homepage>\n<pagetitle></pagetitle>\n<pagedescription></pagedescription>\n</root>");
+		file_put_contents($xmlfile, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<?xml-stylesheet type=\"text/xsl\" href=\"files.xsl\"?>\n<!-- Elenco dei files e relativa descrizione -->\n<root>\n<lastprojectid>0</lastprojectid>\n<lastfileid>0</lastfileid>\n<options><backgroundcolor>E5E4E2</backgroundcolor><sectioncolor>15317E</sectioncolor><textcolor>368BC1</textcolor><linkcolor>0000A0</linkcolor><hovercolor>1F45FC</hovercolor><globalmag>100</globalmag><txtstdmag>1.1</txtstdmag><sectionsmag>1.3</sectionsmag><pagetitlemag>2.2</pagetitlemag><dxmargin>20</dxmargin><sxmargin>20</sxmargin></options>\n<homepage>/</homepage>\n<pagetitle></pagetitle>\n<pagedescription></pagedescription>\n</root>");
 	}
 	if (!file_exists("config.php")) {
 ?>
@@ -88,6 +88,26 @@
 	</head>
 	<body>
 		<script type="text/javascript" src="colorpicker/jscolor.js"></script>
+		<script type="text/javascript" src="jquery.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('input[type="range"]').each(function ( index ) {
+					$(this).after($.parseHTML("<div style=\"text-align: center; \" name=\""+this.name+"_display\"></div>"));
+					showValue(this.name, this.getAttribute('unit'));
+					
+					$(this).on('change', function () {
+						showValue(this.name, this.getAttribute('unit'))
+					});
+				});
+			});
+	
+			function showValue(name, units)
+			{
+				var range = document.getElementsByName(name)[0];
+				var wr = document.getElementsByName(name+"_display")[0];
+				wr.innerHTML = range.value+units;
+			}
+		</script>
 <?php
 	if (isset($_GET['afterinstallation'])) {
 		if (file_exists("install.php"))
@@ -225,7 +245,7 @@
 ?><p class="txtstd text gray center">File modificato con successo</p><?php	
 	}
 
-	//Modifica effettiva delle opzioni
+	//Modifica effettiva dei colori
 	if (isset($_POST['backgroundcolor'])) {
 		$options = $xml->options;
 		$options->backgroundcolor = $_POST['backgroundcolor'];
@@ -234,7 +254,27 @@
 		$options->linkcolor = $_POST['linkcolor'];
 		$options->hovercolor = $_POST['hovercolor'];
 		$xml->asXML($xmlfile);
-?><p class="txtstd text gray center">Impostazioni modificate con successo</p><?php
+?><p class="txtstd text gray center">Colori modificati con successo</p><?php
+	}
+
+	//Modifica effettiva delle grandezze dei caratteri
+	if (isset($_POST['globalmag'])) {
+		$options = $xml->options;
+		$options->globalmag = $_POST['globalmag'];
+		$options->sectionsmag = $_POST['sectionsmag'];
+		$options->txtstdmag = $_POST['txtstdmag'];
+		$options->pagetitlemag = $_POST['pagetitlemag'];
+		$xml->asXML($xmlfile);
+?><p class="txtstd text gray center">Grandezze caratteri modificate con successo</p><?php
+	}
+
+	//Modifica effettiva dei bordi pagina
+	if (isset($_POST['dxmargin'])) {
+		$options = $xml->options;
+		$options->dxmargin = $_POST['dxmargin'];
+		$options->sxmargin = $_POST['sxmargin'];
+		$xml->asXML($xmlfile);
+?><p class="txtstd text gray center">Ampiezza margini modificata con successo</p><?php
 	}
 
 	//Eliminazione effettiva del file
@@ -352,12 +392,22 @@
 				<tr><td>Colore del testo:</td><td><input class="color" name="textcolor" value="<?= $options->textcolor ?>"/></td></tr>
 				<tr><td>Colore dei link:</td><td><input class="color" name="linkcolor" value="<?= $options->linkcolor ?>"/></td></tr>
 				<tr><td>Colore dei link evidenziati:</td><td><input class="color" name="hovercolor" value="<?= $options->hovercolor ?>"/></td></tr>
+				<tr><td>Grandezza carattere della pagina (globale):</td><td><input type="range" unit="%" name="globalmag" min="30" max="200" step="5" value="<?= $options->globalmag ?>"/></td></tr>
+				<tr><td>Grandezza titolo pagina:</td><td><input type="range" unit="em" name="pagetitlemag" min="1.50" max="4" step="0.05" value="<?= $options->pagetitlemag ?>"/></td></tr>
+				<tr><td>Grandezza titoletti:</td><td><input type="range" unit="em" name="sectionsmag" min="1.00" max="3" step="0.05" value="<?= $options->sectionsmag ?>"/></td></tr>
+				<tr><td>Grandezza testo standard:</td><td><input type="range" unit="em" name="txtstdmag" min="0.75" max="2" step="0.05" value="<?= $options->txtstdmag ?>"/></td></tr>
+				<tr><td>Margine pagina destro:</td><td><input type="range" unit="%" name="dxmargin" min="3" max="30" step="0.5" value="<?= $options->dxmargin ?>"/></td></tr>
+				<tr><td>Margine pagina sinistro:</td><td><input type="range" unit="%" name="sxmargin" min="3" max="30" step="0.5" value="<?= $options->sxmargin ?>"/></td></tr>
 				<tr><td colspan="2"><button>Modifica Impostazioni</button></td></tr>
 			</tbody></table>
 		</form><br/><br/>
-		<form accept-charset="utf-8" action="<?= $_SERVER['PHP_SELF'] ?>" method="POST">
+		<form accept-charset="utf-8" action="<?= $_SERVER['PHP_SELF'] ?>?modoptions" method="POST">
 			<input type="hidden" name="backgroundcolor" value="E5E4E2"/><input type="hidden" name="sectioncolor" value="15317E"/><input type="hidden" name="textcolor" value="368BC1"/><input type="hidden" name="linkcolor" value="0000A0"/><input type="hidden" name="hovercolor" value="1F45FC"/>
 			<button>Ripristina colori Predefiniti</button>
+		</form>
+		<form accept-charset="utf-8" action="<?= $_SERVER['PHP_SELF'] ?>?modoptions" method="POST">
+			<input type="hidden" name="globalmag" value="90"/><input type="hidden" name="pagetitlemag" value="2.4"/><input type="hidden" name="sectionsmag" value="1.6"/><input type="hidden" name="txtstdmag" value="1.3"/>
+			<button>Ripristina grandezze caratteri Predefinite</button>
 		</form>
 		<hr/>
 <?php
@@ -393,7 +443,7 @@
 	<?php } ?>
 			<li><a href="<?= $_SERVER['PHP_SELF'] ?>?modpagetitle">MODIFICA TITOLO E DESCRIZIONE PAGINA</a></li>
 			<li><a href="<?= $_SERVER['PHP_SELF'] ?>?project=<?= $lastprojectid+1 ?>&createnewproject">CREA NUOVO PROGETTO</a></li>
-			<li><a href="<?= $_SERVER['PHP_SELF'] ?>?modoptions">MODIFICA IMPOSTAZIONI</a></li>
+			<li><a href="<?= $_SERVER['PHP_SELF'] ?>?modoptions">MODIFICA IMPOSTAZIONI DI LAYOUT</a></li>
 			<li><a href="<?= $_SERVER['PHP_SELF'] ?>?logout">LOGOUT</a></li>
 			</ul><hr/>
 	<?php
