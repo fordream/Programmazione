@@ -1,7 +1,0 @@
-Opzioni disponibili:
-
-- Cambiare grandezza dei caratteri
-
-- Cambiare larghezza colonna
-
- 

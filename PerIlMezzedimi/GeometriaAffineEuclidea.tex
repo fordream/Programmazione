@@ -1,0 +1,85 @@
+\documentclass[a4paper,NoNotes,GeneralMath]{stdmdoc}
+
+\newcommand{\ssa}{\mbox{ ssa }}
+\newcommand{\di}{\mbox{ di }}
+
+\begin{document}
+	\section*{Geometria Affine Euclidea in $\bbR^n$}
+	$\forall S \ssa \di \bbR^n$, denotiamo con $W_S$ la giacitura di $S$. \\
+	$X\cdot Y$ prodotto scalare ordinario in $\bbR^n$
+	
+	\Definizione $v\in\bbR^n$ è ortogonale al $\ssa S$ se $v \in W_S^\bot$
+	\Altro{Esempio} Se $H$ è l'iperpiano di equazione $B\cdot X+d = 0$, allora $B$ è ortogonale ad $H$.
+	\Definizione $S, S' \ssa \di \bbR^n$. Si dice che $S$ e $S'$ sono ortogonali (e scriviamo $S \bot S'$) $\sse W_S \subseteq W_{S'}^\bot$ ($\sse W_{S'} \subseteq W_S^\bot$)
+	\Altro{Esempi}
+		\begin{enumerate}
+			\item $r$ retta di equazione parametrica $X = At + C$, $r'$ retta di equazione parametrica $X = A't+C'$ hanno giacitura $W_r = \Span(A)$, $W_{r'} = \Span(A')$ quindi $r \bot r' \sse W_r \subseteq W_{r'}^\bot \sse A \in (\Span(A'))^\bot \sse A\cdot A' = 0$
+			\item $r$ retta di equazione $X = At+C$, $H$ iperpiano di equazione $B\cdot X+d = 0$. Allora $W_H = \{X \mid B\cdot X = 0\}$ e $W_H^\bot = \Span(B)$ da cui segue che $r \bot H \sse A \parallel B$
+		\end{enumerate}
+	\Proposizione $S \ssa \di \bbR^n$, $\Dim S = k$ \\
+		\begin{enumerate}
+			\item Se $S'$ è ortogonale ad $S$, $\Dim S' \le n-k$.
+			\item $\forall d \in \{0, \ldots, n-k\} \quad \exists S' \ssa \di \bbR^n \tc$ \system{S' \bot S}{\Dim S' = d}
+			\item Tutti i $\ssa S' \di \bbR^n \tc$ \system{S' \bot S}{\Dim S' = n-k} sono paralleli tra loro e ciascuno di essi interseca $S$ in uno ed un solo punto
+			\item $\forall P \in \bbR^n \quad \exists ! \ssa S' \tc$ \system{S' \bot S}{\Dim S' = n-k}{P \in S'}
+		\end{enumerate}
+	\Dimostrazione
+		\begin{enumerate}
+			\item $W_S \subseteq W_{S'}^\bot$. Poiché $\Dim W_S = k$, allora $\Dim(W_{S'}^\bot) \ge k$ e quindi $\Dim S' = \Dim W_{S'} \le n-k$
+			\item Basta prendere $S' \tc$ \system{W_{S'} \subseteq W_S^\bot}{\Dim S' = \Dim W_{S'} = d}
+			\item Sia $S = R + W_S$ e sia $S' \tc$ \system{S' \bot S}{\Dim S' = n-k}. Allora $S' = Q + W_{S'}$ e $W_{S'} \subseteq W_S^\bot$. Poiché $\Dim W_{S'} = n-k = \Dim W_S^\bot$, allora $W_{S'} = W_S^\bot$ (cioè tutti questi ssa hanno giacitura $W_S^\bot$, dunque sono paralleli tra loro) \\
+				Consideriamo uno di questi ssa $S' = Q + W_S^\bot$ \\
+				Osservazione: $\bbR^n = W_S \oplus W_S^\bot$ quindi $R-Q = \underset{\in W_S}{v} + \underset{\in W_S^\bot}{w} \implies \underset{\in R + W_S = S}{R - v} = \underset{\in Q + W_S^\bot = S'}{Q + w} \implies P_0 = R - v = Q + w \in S \cap S'$. Per l'unicità dello spezzamento, $P_0$ è unico.
+			\item Basta prendere $S' = P + W_S^\bot$
+		\end{enumerate}
+	\Altro{Caso particolare} $r$ retta in $\bbR^3$, $P \in \bbR^3$. Allora $\exists !$ piano $H$ passante per $P$ ed ortogonale ad $r$. Tale piano interseca $r$ in uno ed un solo punto $P_0$
+	\Osservazione Se $r$ ha equazione parametrica $X = At + C$, allora $W_r = \Span(A)$. Deve essere $W_r \subseteq W_H^\bot$ e quindi $W_r = W_H^\bot$ cioè $W_H^\bot = \Span(A)$. Allora $H$ ha equazione cartesiana $A\cdot X = A\cdot P$
+	\Osservazione Si può estendere la nozione di ortogonalità a due iperpiani in $\bbR^n$. Se $H = \{X \mid B\cdot X + d = 0\}$ e $H' = \{X \mid B'\cdot X + d' = 0\}$ allora le giaciture $B\cdot X = 0$ e $B'\cdot X = 0$ sono ortogonali ai vettori $B$ e $B'$. Diciamo che $H$ e $H'$ sono ortogonali $\sse B \bot B' \sse B\cdot B' = 0$
+	\Esempio due piani in $\bbR^3$
+
+	\subsection*{Distanza di un punto da un sottospazio affine}
+	$S \ssa \di \bbR^n$, $P \in \bbR^n$
+	\Definizione $d(P,S) = \inf \{d(P,X) \mid X\in S\}$
+	\Proposizione $\exists P_0 \in S \tc d(P,S) = \norma{P-P_0}$ (e quindi l'inf è un minimo)
+	\Dimostrazione Sia $\Dim S = k$. Per la proposizione precedente, $\exists ! S' \ssa \tc$ \system{S' \bot S}{\Dim S' = n-k}{P \in S'}. Allora $S\cap S' = \{P_0\}$
+	\Osservazione $(P-P_0) \bot S$
+	
+	Voglio provare che $d(P,S) = \norma{P-P_0}$, ossia che $\forall x\in S, x \neq P_0$, si ha $d(P, X) > \norma{P-P_0}$. Infatti $d(P,X)^2 = \norma{P-X}^2 = \norma{(P-P_0)+(P_0-X)}^2 = ((P-P_0)+(P_0-X))\cdot((P-P_0)+(P_0-X)) = d(P,P_0)^2 + \underset{> 0}{d(P_0, X)^2} + \underset{= 0 \mbox{ perché } (P-P_0)\bot s}{2(P_0-X)\cdot(P-P_0)} > \norma{P-P_0}^2$
+
+	\Altro{Caso Particolare: distanza punto-iperpiano}
+	$H$ iperpiano di equazione $B\cdot X + d = 0$, $P \in \bbR^n$. Allora $d(P,H) = \frac{\mid B\cdot P + d \mid}{\norma{B}}$
+	\Dimostrazione $d(P,H) = \norma{P-P_0}$ dove $P_0 = H\cap r$ con $r$ la retta per $P$ ortogonale ad $H$. $r$ ha equazione $X = Bt+P$. \\ 
+	Calcolo $r\cap H$: $B\cdot(Bt+P)+d=0$ cioè $t = \frac{-d-B\cdot P}{B\cdot B}$ ossia $P_0 = r\cap H = \frac{-d-B\cdot P}{B\cdot B}B + P$ \\
+	$d(P,H) = \norma{P-P_0} = \norma{\frac{B\cdot P+d}{B\cdot B} B} = \frac{\mid B\cdot P +d}{\norma{B}^2} \norma{B} = \frac{\mid B\cdot P+d}{\norma{B}}$
+
+	\Altro{Esercizio} Calcolare la distanza di un punto $P$ da una retta $r$ di $\bbR^3$.
+	\Definizione{Distanza fra due sottospazi affini di $\bbR^n$} $d(S,S') \underset{def}{=} \inf \{d(X,Y) \mid X\in S, Y\in S'\}$
+	
+	\subsection*{Casi particolari in $\bbR^3$}
+	\Altro{Distanza di due piani $H_1, H_2$ di $\bbR^3$}
+		\begin{itemize}
+			\item se $H_1 \cap H_2 \neq \emptyset \qquad d(H_1, H_2) = 0$
+			\item se $H_1 \parallel H_2$, allora $d(H_1, H_2) = d(P, H_2) \forall P\in H_1$, che si può calcolare con la formula precedente
+		\end{itemize}
+
+	\Altro{Distanza retta-piano}
+		\begin{itemize}
+			\item Se $r\cap H\neq\emptyset \qquad d(r, H) = 0$
+			\item Se $r \parallel H$, allora $d(r, H) = d(P, H) \forall P\in r$ che si calcola con la formula
+		\end{itemize}
+
+	\Altro{Distanza retta-retta}
+		\begin{itemize}
+			\item se $r_1\cap r_2 \neq \emptyset \qquad d(r_1,r_2) = 0$
+			\item se $r_1 \parallel r_2 \implies d(r_1, r_2) = d(P, r_2) \forall P\in r_1$
+		\end{itemize}
+		Resta da esaminare il caso di due rette sghembe $r_1 \quad X = A_1t+C_1$, $r_2 \quad X = A_2t+C_2$. Poiché $r_1$ e $r_2$ non sono parallele, $A_1$ e $A_2$ sono linearmente indipendenti. \\
+		Provo che $\exists !$ retta $l \tc$ \system{l\cap r_1 \neq\emptyset}{l\cap r_2 \neq\emptyset}{l\bot r_1 \mbox{ e } l \bot r_2} \\
+		In tal caso se $P_1 = l \cap r_1$ e $P_2 = l\cap r_2$ allora $d(r_1, r_2) = \norma{P_1-P_2}$
+		\Dimostrazione Il generico punto di $r_1$ è $P(t) = A_1t + C_1$. Il generico punto di $r_2$ è $Q(\theta) = A_2\theta + C_2$. La retta $l$ congiungente $P(t)$ e $Q(\theta)$ è ovviamente incidente sia a $r_1$ che ad $r_2$; provo che $\exists t \quad \exists \theta \tc$ essa è ortogonale sia a $r_1$ che a $r_2$. \\
+		Poiché $l$ è parallela al vettore $P(t)-Q(\theta) = A_1t + C_1 - A_2\theta - C_2$, basta imporre \system{(A_1t+C_1-A_2\theta -C_2)\cdot A_1 = 0}{(A_1t+C_1-A_2\theta -C_2)\cdot A_2 = 0} \\
+		La matrice dei coefficienti di questo sistema lineare $2\times 2$ è $M = \left( \begin{array}{cc} A_1\cdot A_1 & - A_1\cdot A_2 \\ A_1\cdot A_2 & -A_2\cdot A_2 \\ \end{array} \right) $ \\
+		$\Det M = -(A_1\cdot A_1)(A_2\cdot A_2) + (A_1\cdot A_2)^2$. Se $A_1 = (\alpha_1, \beta_1, \gamma_1) \quad A_2 = (\alpha_2, \beta_2, \gamma_2)$ si ha $\Det M = -(\alpha_1\beta_2 - \alpha_2\beta_1)^2 - (\alpha_1\gamma_2 - \alpha_2\gamma_1)^2 - (\beta_1\gamma_2 - \beta_2\gamma_1)^2$. \\
+		Se fosse $\Det M = 0$, la matrice $\left( \begin{array}{c} --- A_1 --- \\ --- A_2 --- \\ \end{array} \right) = \left( \begin{array}{ccc} \alpha_1 & \beta_1 & \gamma_1 \\ \alpha_2 & \beta_2 & \gamma_2 \\ \end{array} \right)$ avrebbe rango $1$: assurdo perché $A_1$ e $A_2$ sono linearmente indipendenti. \\
+		Quindi $\Det M \neq 0$ e allora il sistema ammette un'unica soluzione $(t_0, \theta_0)$. I punti $P(t_0)$ e $Q(\theta_0)$ sono quelli cercati.
+\end{document}
