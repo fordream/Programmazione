@@ -1,0 +1,218 @@
+\documentclass[a4paper,NoNotes,GeneralMath]{stdmdoc}
+
+\begin{document}
+	\title{Simulazione di Compito 1}
+
+	\section*{Esercizio 1 - Coniche}
+	Si consideri la conica $\cC$ di equazione $x^2+xy-2y^2+3y-1=0$
+	\begin{enumerate}
+		\item Si discuta il tipo affine della conica $\cC$
+		\item Si dica se la conica è a centro e, nel caso in cui lo sia, si calcolino le coordinate del centro
+		\item Si trasli ora il centro della conica nell'origine e si caratterizzi lo stabilizzatore della nuova conica (ovvero si dica quali sono le affinità che mandano la nuova conica in sè stessa)
+	\end{enumerate}
+
+	\section*{Esercizio 2 - Domandine}
+	\begin{enumerate}
+		\item Sia $f \in\Isom(\bbR^3)$. Sappiamo che $f$ è diretta e con almeno un punto fisso. Che tipo di isometria può essere?
+		\item Possono esistere due matrici $A, B \in \kM(n,\bbR)$ tali che $AB - BA = I$ ?
+		\item $\phi \in \PS(V)$ definito positivo. $(V, \phi)$ euclideo. $f \in \End(V)$. $\Psi(x,y) := \phi(f(x), f(y))$. Calcolare la segnatura di $\Psi$.
+	\end{enumerate}
+
+	\section*{Esercizio 3 - Applicazioni Lineari}
+		Sia $A \in \GL(n,\bbR)$ una matrice fissata e sia $S: \kM(n, \bbR) \rar \kM(n, \bbR)$ la funzione lineare così definita:
+		$$ S_A(X) = {}^tXA - {}^tAX $$
+	\begin{enumerate}
+		\item Si dica per quali $A$, $S_A$ è diagonalizzabile
+		\item Si calcolino polinomio minimo e caratteristico di $S_A$
+	\end{enumerate}
+
+	\section*{Esercizio 4 - Prodotti scalari}
+		Sia $\scal{\cdot}{\cdot}$ un prodotto scalare definito positivo su $\bbR^n$ e sia $V = \text{Hom }(\bbR^k, \bbR^n)$. Fissato $v \in \bbR^k, v \neq 0$, si consideri l'applicazione $b:V\times V \rar \bbR$ definita da $b(f,g) = \scal{f(v)}{g(v)}$. \\
+	Verificare che $b$ è un prodotto scalare su $V$ e determinarne la segnatura.
+	
+	\newpage
+	\title{Simulazione di Compito 2}
+	
+	\section*{Esercizio 1 - Conti e Prodotti Scalari}
+		Al variare di $\alpha \in\bbR$ si consideri la matrice reale $$ A_\alpha = \left( \begin{array}{ccc} 1 & 2 & 1 \\ 2 & 0 & \alpha \\ 1 & \alpha & \alpha^2 \end{array} \right) $$ \\
+	Determinare, al variare degli $\alpha$, gli indici di positività, negatività e nullità del prodotto scalare $\varphi_\alpha$ su $\bbR^3$ associato ad $A_\alpha$ rispetto alla base canonica
+
+	\section*{Esercizio 2 - Applicazioni Lineari}
+	Per ogni $f \in \End(\bbR^n)$ si consideri il sottoinsieme $W_f = \{ g\in \End(\bbR^n) \mid \quad g\circ f = f \circ g \}$.
+	\begin{enumerate}
+		\item Verificare che $W_f$ è un sottospazio di $\End(\bbR^n)$
+		\item Dimostrare che se $f' = h \circ f \circ h^{-1}$ per qualche $h\in\End(\bbR^n)$, allora $\Dim W_f = \Dim W_{f'}$
+		\item Supponiamo che $f$ sia diagonalizzabile. Dimostrare che $\Dim W_f = n$ se e solo se $f$ ha $n$ autovalori distinti
+	\end{enumerate}
+
+	\section*{Esercizio 3 - Misto Mare}
+	Siano $V$ e $W$ spazi vettoriali su $\bbR$ di dimensione $n$ ed $m$ rispettivamente. Siano inoltre $V_1$ e $V_2$ sottospazi di $V$ di dimensione $n_1$ ed $n_2$ rispettivamente, con $V_1 \cap V_2 = \{0\}$. Sia infine $W_1 \subseteq W$ un sottospazio di dimensione $m_1$. \\ Supponiamo che $W$ sia dotato di un prodotto scalare $\phi$ definito positivo. Dimostrare che l'insieme $$\{f: V\rar W \text{ lineari } \mid \quad f(V_1) \subseteq W_1, f(V_2) \subseteq W_1^\bot \}$$ è un sottospazio vettoriale di $\text{Hom }(V,W)$ e calcolarne la dimensione.
+
+	\section*{Esercizio 4 - Morte}
+	Si consideri $\bbR^3$ come spazio affine euclideo con il prodotto scalare standard.
+	\begin{enumerate}
+		\item Siano $S = \{ (x, y, z) \in \bbR^3 \mid x^2 + y^2 + z^2 \le 1 \}$, $P = \{ (x,y,z) \in\bbR^3 \mid z = -2 \}$. Si calcoli il luogo dei punti equidistanti dai due insiemi $S$ e $P$ e se ne determini il tipo affine (come quadrica).
+		\item Si consideri il fascio di coniche $\{\cC_t\}_{t\in\bbR}$ dove la conica $\cC_t$ ha equazione $(x^2 - y) + t(xy - 2)$. Si dimostri che date due qualsiasi coniche distinte $\cC_\alpha, \cC_\beta$ appartenenti al fascio, la loro intersezione consiste sempre degli stessi punti (cioè non dipendono dalle coniche scelte).
+	\end{enumerate}
+
+	\newpage
+	\title{Simulazione di Compito 3}
+	\section*{Esercizio 1 - Matrici}
+	Siano $A, B$ due matrici reali simmetriche $n \times n$. Dimostrare che
+	\begin{enumerate}
+		\item $AB$ è simmetrica se e solo se $AB = BA$
+		\item Se $AB$ è simmetrica, allora esiste un autovettore comune per $A$ e per $B$
+		\item Se $AB$ è simmetrica, allora esiste una base ortonormale di $\bbR^n$ (rispetto al prodotto scalare ordinario) formata da autovettori comuni per $A$ e per $B$
+	\end{enumerate}
+
+	\section*{Esercizio 2 - Applicazioni Lineari}
+	Sia $L_k : \bbR_2[t] \rar \bbR_2[t]$ l'applicazione lineare definita da $$ L_k(p(t)) = p(0) + p(k)t + p(1)t^2 $$ con $k\in\bbR$.
+	\begin{enumerate}
+		\item Dire per quali valori di $k\in\bbR$, $L_k$ è diagonalizzabile
+		\item Detta $G_k: \bbR^3 \rar \bbR_2[t]$ l'applicazione lineare definita da $$G_k(x,y,z) = 2kx + ky + (y-2z)t+(kx-y+3z)t^2$$ determinare i valori di $k\in\bbR$ tali che $$ \bbR_2[t] = \Img G_k \oplus \Ker L_k $$
+	\end{enumerate}
+
+	\section*{Esercizio 3 - Prodotti Scalari}
+	Si consideri $\bbR^n$ dotato del prodotto scalare canonico. Sia $F$ lo spazio vettoriale $$ F = \{ A \in \kM(n,\bbR) \mid \quad \forall v \in \bbR^n \quad Av \in v^{\bot}\}$$
+	Dimostrare che $F$ coincide con l'insieme delle matrici antisimmetriche.
+
+	\section*{Esercizio 4 - Vero o Falso}
+	Si dica se le seguenti affermazioni sono vere o false, producendo un controesempio nel caso in cui siano false e dimostrandole se sono vere.
+	\begin{enumerate}
+		\item Tutte le quadriche degeneri di $\bbR^3$ sono a centro
+		\item Sia $m < n$ e si consideri $\bbR^n, \bbR^m$ come spazi euclidei con il prodotto scalare standard. Si consideri un'applicazione lineare $f: \bbR^n \rar \bbR^m$ di rango massimo. Allora nessuna base ortonormale di $\bbR^n$ viene mandata in una base ortonormale di $\bbR^m$
+		\item Date due matrici ortogonali reali $M, N \in \Ort(\bbR^k)$ esiste sempre una applicazione lineare $f: \kM(k, \bbR) \rar \kM(k, \bbR)$ tale che $f(M) = N$ e tale che $\exists \cB$ base di $\kM(k, \bbR)$ in cui $f$ è ortogonale, ovvero $[f]_\cB \in \Ort(\bbR^{k^2})$ 
+	\end{enumerate}
+
+	\newpage
+	\title{Simulazione di Compito 4}
+	\section*{Esercizio 1 - Endomorfismi}
+	Sia $V$ uno spazio vettoriale di dimensione finita e $\phi: V \rar V$ un endomorfismo diagonalizzabile. Dato uno spazio vettoriale $T$ di dimensione $n$, si consideri l'endomorfismo $\blbeta: \text{Hom }(T,V) \rar \text{Hom }(T,V)$ definito da $\blbeta(\xi) = \phi\circ\xi$.
+	\begin{enumerate}
+		\item Si dica se $\blbeta$ è diagonalizzabile e se ne discutano lo spettro, le molteplicità e le nullità in funzione dello spettro di $\phi$
+		\item Si considerino le analoghe domande a proposito dell'endomorfismo $\blPsi: \text{Hom }(V,T) \rar \text{Hom }(V,T)$ definito da $\blPsi(\xi) = \xi\circ\phi$
+	\end{enumerate}
+
+	\section*{Esercizio 2 - Prodotti Scalari}
+	Sia $V = \kM(n, \bbR)$ e sia $\varphi$ il prodotto scalare su $V$ dato da $\varphi(B,C) = \text{tr }({}^tBC)$ per ogni $B, C$ in $V$. Fissata $A \in V$, sia $f_A: V \rar V$ l'endomorfismo tale che $f_A(X) = AX$ per ogni $X\in V$.
+	\begin{enumerate}
+		\item Calcolare la segnatura di $\varphi$
+		\item Provare che $\lambda \in \bbR$ è autovalore di $A$ $\sse \lambda$ è autovalore di $f_A$
+		\item Provare che se $A$ è simmetrica allora $f_A$ è $\varphi$-autoaggiunta
+	\end{enumerate}
+
+	\section*{Esercizio 3 - Coniche}
+	Sia $\cC_k$ la conica di equazione $$ \cC_k : \qquad x^2+kxy+y^2-4 = 0$$ con $k\in \bbR$.
+	\begin{enumerate}
+		\item Trovare le coniche degeneri della famiglia
+		\item Mostrare che tutte le ellissi appartenenti alla famiglia sono reali
+	\end{enumerate}
+
+	\section*{Esercizio 4 - Endomorfismi}
+	Sia $V$ uno spazio vettoriale di dimensione $n$ su $\bbC$ e sia $\phi: V \rar V$ un endomorfismo con autovalori $c_1, \ldots, c_r$.
+	\begin{enumerate}
+		\item Si mostri, che dato un polinomio $P(x) \in \bbC[x]$, $P(c_1), \ldots, P(c_r)$ sono autovalori dell'endomorfismo $P(\phi)$
+		\item Si mostri che se $\phi$ è diagonalizzabile, anche $P(\phi)$ è diagonalizzabile.
+		\item Vale anche il viceversa?
+	\end{enumerate}
+
+	\newpage
+	\title{Simulazione di Compito 5}
+	\section*{Esercizio 1 - Costruzione di Prodotti Scalari}
+	Siano $v_1 = (1,1,0), v_2 = (2,2,3), v_3=(1,-1,-1), v_4=(1,0,0), U = \{(x,y,z)\in\bbR^3 \mid \quad z = x+y\}$. Costruire, se esiste, un prodotto scalare $\Phi$ su $\bbR^3$ tale che $\Span(v_1,v_2)^\bot = U$, $v_3$ è ortogonale a $v_4$ e $\Phi(v_1,v_1) = 4$. Tale prodotto scalare è unico?
+	
+	\section*{Esercizio 2 - Matrici}
+	Sia $V = \kM(n,\bbR)$ e, dato $v\in\bbR^n$, definiamo $F_v: V \rar \bbR^n$ tramite la formula $F_v(A) = Av$ per ogni $A \in V$. Sia $W = \{A \in V \mid \quad {}^tA A\in \Span(I)\}$
+	\begin{enumerate}
+		\item Verificare che $W$ è un sottospazio di $V$
+		\item Verificare che $F_v$ è lineare per ogni $v\in\bbR^n$
+		\item Per quali $v\in\bbR^n$ l'applicazione $F_v$ è surgettiva?
+		\item Per quali $n\in\bbN$ e $v\in\bbR^n$, $W$ è isomorfo a $\Ker(F_v)$ ?
+	\end{enumerate}
+
+	\section*{Esercizio 3 - Miscellanea}
+	\begin{enumerate}
+		\item Sia $D \in \kM(n,\bbC)$ una matrice diagonale. Si mostri che ogni matrice diagonale si scrive come combinazione lineare di $I, D, D^2, \ldots, D^{n-1}$ se e solo se gli autovalori di $D$ sono a due a due distinti.
+		\item Sia $V$ uno spazio vettoriale di dimensione finita sul campo $\bbC$. Siano poi $\Phi$ un automorfismo di $V$, $N$ un endomorfismo di $V$ e $\lambda$ una costante di modulo minore di $1$, legati dalla relazione: $\Phi N = \lambda N \Phi$. Si mostri che, sotto tali ipotesi, $N$ è un endomorfismo nilpotente.
+	\end{enumerate}
+	
+	\section*{Esercizio 4 - Vero e Falso}
+	Si dica se le seguenti affermazioni sono vere o false, producendo un controesempio nel caso in cui siano false e dimostrandole se sono vere.
+	\begin{enumerate}
+		\item Sia $A \in \kM(n, \bbK)$ tale che $\Tr A = \Tr A^2 = \Tr A^3 = \ldots = \Tr A^n = 0$. Si può dire che $A = 0$?
+		\item Sia $V$ uno spazio vettoriale di dimensione $n$, e sia $f: V \rar V$ un endomorfismo. Supponiamo che esista un intero $k_0$ con $0 < k_0 < n$ tale che tutti i sottospazi di $V$ di dimensione $k_0$ sono $f$-invarianti. è necessariamente vero che allora tutti i sottospazi di $V$ (indipendentemente dalla loro dimensione) sono $f$-invarianti?
+	\end{enumerate}
+	
+	\newpage
+	\title{Simulazione di Compito 6}
+	\section*{Esercizio 1 - Cose}
+	Data una matrice $A \in \kM(n,\bbC)$, si indichi con $\cC_A$ il sottospazio vettoriale $$ \cC_A = \{X \in \kM(n,\bbC) \mid \quad XA = AX \} $$
+	\begin{enumerate}
+		\item Si mostri che $\Dim \cC_A = \Dim \cC_B$ quando $A$ e $B$ sono simili
+		\item Si mostri che $\cC_A = \Span(1, A, \ldots, A^{n-1})$ quando il polinomio caratteristico di $A$ è prodotto di $n$ fattori lineari distinti
+	\end{enumerate}
+
+	\section*{Esercizio 2 - Prodotti Scalari}
+	Sia $A \in \kM(n, \bbR)$ una matrice simmetrica tale che $A^3 = A$. Si consideri il prodotto scalare $\phi(x,y) = {}^txAy$ per ogni $x, y\in \bbR^n$. \\ Si può calcolare la segnatura di $\phi$ sapendo solo che $\Tr A^5 = k$ e $\Tr A^2 = r$? \\ In caso positivo esprimere $\sigma(\phi)$ come funzione di $r$, $k$, $n$. In caso negativo trovare due matrici simmetriche che soddisfino le condizioni date ma che inducano due diversi prodotti scalari.
+
+	\section*{Esercizio 3 - Vero o Falso}
+	Si dica se le seguenti affermazioni sono vere o false, producendo un controesempio nel caso in cui siano false e dimostrandole se sono vere.
+	\begin{enumerate}
+		\item Se una matrice quadrata $A$ è simile ad una matrice triangolare superiore ed è simile anche ad una matrice triangolare inferiore, allora $A$ è diagonalizzabile
+		\item Sia $V$ uno spazio vettoriale. Sia $E$ il sottoinsieme di $\text{Hom }(V,V)$ definito nel seguente modo: $$ E=\{f:V\rar V \mid \quad m_f(0) = 0\}$$ dove $m_f$ è il polinomio minimo di $f$. Allora $E$ è un sottospazio vettoriale di $\text{Hom }(V,V)$
+	\end{enumerate}
+
+	\section*{Esercizio 4 - Conti e Coniche}
+	Si consideri la conica $\cC$, di equazione $$\cC : \quad 4x^2 + y^2 - 4xy + 10x - 4 = 0$$ Se ne determini il tipo affine, si calcolino gli eventuali centri e si produca inoltre la matrice di una affinità che porta l'equazione della conica nella sua forma canonica
+
+	\newpage
+	\title{Simulazione di Compito 7}
+	\section*{Esercizio 1 - Prodotti Scalari}
+	Sia $V$ uno spazio vettoriale su un campo $\bbK$. Siano $W_1$ e $W_2$ due sottospazi di $V$ tali che $V = W_1 + W_2$. Siano $\phi_1$ e $\phi_2$ due prodotti scalari, rispettivamente su $W_1$ e $W_2$, tali che $\phi_1\mid_{W_1\cap W_2} = \phi_2\mid_{W_1\cap W_2}$
+	\begin{enumerate}
+		\item Mostrare che esiste un prodotto scalare $\phi$ su $V$ le cui restrizioni su $W_1$ e $W_2$ coincidono rispettivamente con $\phi_1$ e $\phi_2$
+		\item Sia $\bbK = \bbR$. Supponiamo che $\phi_1$ sia definito positivo e che $\phi_2$ sia non degenere con indice di positività $i_{+}(\phi_2) = \Dim(W_1 \cap W_2)$. Sia $\phi$ un prodotto scalare su $V$ che estende $\phi_1$ e $\phi_2$ (nel senso del punto precedente). Calcolare la segnatura di $\phi$
+	\end{enumerate}
+
+	\section*{Esercizio 2 - Applicazioni Lineari}
+	Sia $V$ uno spazio vettoriale complesso e siano $f,g:V \rar V$ due applicazioni lineari. Si supponga $f$ nilpotente e che $f\circ g - g\circ f = f$
+	\begin{enumerate}
+		\item Provare che $\Ker f$ è invariante per $g$
+		\item Provare che esiste un autovettore comune $v_0$ ad $f$ e $g$
+		\item Sia $W$ sottospazio di $V$ tale che $V = \Span(v_0) \oplus W$ e sia $p_W : V \rar W$ la proiezione indotta dalla somma diretta. Se $f' = p_W \circ f\mid_W$, $g' = p_W \circ g\mid_W$, provare che $$f'\circ g' - g'\circ f' = f'$$
+		\item Provare che esiste una base a bandiera comune ad $f$ e $g$
+	\end{enumerate}
+
+	\section*{Esercizio 3 - Matrici}
+	Per ogni coppia di matrici $A, B \in \kM(n, \bbR)$ si consideri il sottoinsieme $$ E = \{ X \in \kM(n,\bbR) \mid \quad AX = B \} $$
+	\begin{enumerate}
+		\item Provare che $E$ è non vuoto se e solo se $\Img B \subseteq \Img A$
+		\item Determinare le coppie $(A, B)$ per cui l'insieme $E$ è un sottospazio vettoriale di $\kM(n, \bbR)$ e, in tal caso, calcolarne la dimensione
+	\end{enumerate}
+
+	\section*{Esercizio 4 - Vero o Falso}
+	Si dica se le seguenti affermazioni sono vere o false, producendo un controesempio nel caso in cui siano false e dimostrandole se sono vere.
+	\begin{enumerate}
+		\item Sia $P \in \kM(n,\bbR)$ una matrice diagonalizzabile. è vero che $I + P^2$ è invertibile?
+		\item Per ogni coppia di matrici $A$ e $B$ in $\kM(n, \bbC)$ esiste un vettore non nullo $v \in \bbC^n$ tale che $Av$ e $Bv$ sono linearmente dipendenti
+		\item Il gruppo delle isometrie di $\bbR^3$ ($\Isom(\bbR^3)$) è generato dagli avvitamenti (o twist)
+		\item Sia $V = \kM(n, \bbR)$, $n \ge 3$. Allora il sottospazio vettoriale generato dalle matrici di rango $3$ è tutto $V$ (ovvero, $\forall A \in \kM(n,\bbR) \quad \exists \beta_1, \ldots, \beta_k \quad \exists B_1, \ldots, B_k \quad \Rk B_i = 3 \tc \qquad A = \beta_1 B_1 + \ldots + \beta_k B_k$)
+	\end{enumerate}
+	
+	\newpage
+	\title{Esercitazione sulle Coniche}
+	\section*{Conica per cinque Punti}
+	Si consideri una generica conica di equazione $ax^2 + bxy + cy^2 + dx + ey + f = 0$
+	\begin{enumerate}
+		\item Si imponga il passaggio della conica per cinque punti $(x_1, y_1), \ldots, (x_5, y_5)$, che siano a tre a tre non allineati \\Ovvero tali che $$\Det \left( \begin{array}{cc} \frac{x_j}{x_i} & \frac{x_k}{x_i} \\ \frac{y_j}{y_i} & \frac{y_k}{y_i} \end{array} \right) \neq 0 \quad \forall i,j,k \text{ tutti distinti}$$
+		\item Dimostrare ora con opportune considerazioni che per cinque punti, a tre a tre non allineati, passa una ed una sola conica non degenere (si ricordi che le coniche sono classi di proporzionalità di polinomi)
+	\end{enumerate}
+
+	\section*{Fasci di coniche}
+	Chiamiamo fascio di coniche generato da due coniche $\gamma_1$ e $\gamma_2$, che si incontrano in quattro punti (reali o no, propri o all'infinito) l'insieme $\cF$ di tutte le coniche la cui equazione di ottiene come combinazione lineare non banale delle equazioni $\gamma_1$ e $\gamma_2$
+	\begin{enumerate}
+		\item Chiamiamo punti base del fascio i quattro punti comuni a $\gamma_1$ e $\gamma_2$. Verificare che {\it tutte e sole} le coniche di $\cF$ passano per tutti e quattro i punti base
+		\item Osservare inoltre che per quattro punti a tre a tre non allineati passano sei rette che, opportunamente considerate a due a due, formano le uniche tre coniche degeneri di $\cF$
+	\end{enumerate}
+	
+\end{document}
