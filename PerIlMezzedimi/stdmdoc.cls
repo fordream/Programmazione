@@ -228,6 +228,7 @@
 	\newcommand{\Supp}{\mbox{Supp }}
 	\newcommand{\Span}{\mbox{Span }}
 	\newcommand{\Symm}{\mbox{Sym }}
+	\newcommand{\Asymm}{\mbox{Asym }}
 	\newcommand{\Img}{\mbox{Im }}
 	\newcommand{\Id}{\mbox{id}}
 	\newcommand{\PS}{\mbox{PS }}
@@ -243,7 +244,9 @@
 }
 
 \ProcessOptions
-%---Comandi Strani---
+
+
 \newcommand{\TODO}{{\LARGE\bf TO DO}}
 
 \sloppy
+

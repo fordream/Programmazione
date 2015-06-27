@@ -1,0 +1,48 @@
+\documentclass[a4paper,NoNotes,GeneralMath]{stdmdoc}
+
+\newcommand{\impl}[1]{\stackrel{\text{#1}}{\implies}}
+\newcommand{\ug}[1]{\stackrel{\text{#1}}{=}}
+
+\begin{document}
+	\section*{Esercizio Difficile}
+	Sia $A \in \GL(n, \bbR)$ e definiamo $\forall X \in \kM(n,\bbR)$, $$ S_A(X) = {}^tXA - {}^tAX $$ \\
+	Dire per quali $A$, $S_A$ è diagonalizzabile e per questi valori calcolare polinomio minimo e caratteristico.
+	\begin{enumerate}
+		\item ({\it Molto difficile}) Supponendo che $S_A$ sia diagonalizzabile, ovvero che esista una base di autovettori tali che ${}^tXA - {}^tAX = \lambda X$, dimostrare che per $\lambda \neq 0$ deve necessariamente essere ${}^tX = -X$ (Se $X$ è autovettore).
+		\item Dedurne quindi che $S_A\mid_{\Symm(n,\bbR)} \equiv 0$ (poiché le simmetriche devono essere tutte contenute nell'autospazio relativo a $0$, cioè nel Kernel).
+		\item Mostrare ora che questa ipotesi implica che $A$ sia simmetrica e che debba essere $AX = XA$ per ogni $X$ simmetrica.
+		\item Dedurne che le uniche matrici possibili sono $A = \mu I$.
+		\item Dimostrare che per $A = \mu I$, $S_A$ è effettivamente diagonalizzabile e calcolarne polinomio minimo e caratteristico.
+	\end{enumerate}
+
+	\section*{Soluzione}
+	\begin{enumerate}
+		\item Supponiamo che esiste una base di autovettori e vediamo che proprietà devono avere gli autovettori $X$. \\
+			${}^tXA - {}^tAX = \lambda X \implies {}^tXA = ({}^tA + \lambda I) X \implies {}^tX = ({}^tA + \lambda I) X A^{-1}$ \\
+			Siccome ${}^tXA = ({}^tA + \lambda I) X$, trasponendo si ottiene ${}^tAX = {}^tX (A + \lambda I)$ e sostituendo ${}^tX$ si ha
+				${}^tAX = ({}^tA + \lambda I) X A^{-1} (A + \lambda I) \implies X = (I + \lambda {}^tA^{-1}) X (I + \lambda A^{-1})$ \\
+			Ora sviluppando i conti a destra e semplificando le due X si ha $\lambda ({}^tA^{-1} X + X A^{-1}) = - \lambda^2 {}^tA^{-1} X A^{-1} $ da cui
+				moltiplicando per ${}^tA$ a sinistra e per $A$ a destra, e (supponiamo $\lambda \neq 0$) dividendo per $\lambda$ si ottiene
+				$(XA + {}^tAX) = - \lambda X$ \\
+			Usando ora l'ipotesi di $X$ autovettore si ha $(XA + {}^tAX) = -\lambda X = - ({}^tXA - {}^tAX) = -{}^tXA + {}^tAX \implies XA = -{}^tXA$ e
+				moltiplicando a destra per $A^{-1}$ si ottiene $X = -{}^tX$, da cui si deduce che se $X$ è autovettore per $\lambda \neq 0$, allora
+				$X$ è una matrice antisimmetrica
+		\item Ora possiamo dedurne che se $X$ è un autovettore e sta nelle matrici simmetriche, allora è un autovettore relativo a $0$ (Se fosse
+				relativo a $\lambda \neq 0$ sarebbe anche antisimmetrica quindi $X$ sarebbe la matrice nulla, che non è un autovettore). \\
+			Mostriamo ora che $\Symm(n,\bbR) \subseteq V_0$: per ipotesi ($S_A$ diagonalizzabile) $V = V_0 \oplus V_{\lambda_1} \oplus \ldots
+				\oplus V_{\lambda_n}$. Inoltre $V = \Asymm(n, \bbR) \oplus \Symm(n, \bbR)$. Allora, sia $Y$ una matrice simmetrica. Usando $X \in V$,
+				otteniamo che $X$ si scrive in modo unico come $X = M_{0S} + M_{0A} + M_{\lambda_1} + \ldots + M_{\lambda_n}$ con $M_{0A} \in V_0 \cap
+				\Asymm(n, \bbR), M_{0S} \in V_0 \cap \Symm(n,\bbR) , M_{\lambda_i} \in V_{\lambda_i}$. \\
+			Inoltre sappiamo che $M_{\lambda_1} + \ldots + M_{\lambda_n} \in V_{\lambda_1} \oplus V_{\lambda_n} \subseteq \Asymm(n, \bbR)$ quindi
+				$M_{0A} + M_{\lambda_1} + \ldots + M_{\lambda_n} = 0$ (perché le simmetriche e le antisimmetriche sono in somma diretta) $\implies X \in V_0$,
+				quindi $S_A\mid_{\Symm(n,\bbR)} \equiv 0$.
+		\item Usando il fatto appena dimostrato, notiamo che $I$ è simmetrica e che quindi deve valere $S_A(I) = 0$, ovvero $A - {}^tA = 0$, quindi $A$ è simmetrica. \\
+			Si può quindi scrivere, $\forall X \in \Symm \quad 0 = {}^tXA - {}^tAX = XA - AX$, ovvero $A$ commuta con tutte le matrici simmetriche.
+		\item (Conti)
+		\item Se $A = \mu I$, abbiamo $S_\mu (X) = \mu ({}^tX - X)$, $\mu \neq 0$ ($A = 0 \not\in \GL(n, \bbR)$). Si considerino ora le matrici simmetriche e quelle antisimmetriche. \\
+			Se $Y \in \Symm(n, \bbR)$ si ha $S_\mu (Y) = \mu ({}^tY - Y) = 0$, quindi $S_\mu\mid_{\Symm} \equiv 0$. Se $Y \in \Asymm(n, \bbR)$ si ha $S_\mu(Y) = \mu ({}^tY - Y) = - 2\mu Y$,
+			quindi $S_\mu\mid_{\Asymm} \equiv 2\mu \Id$. \\
+			$S_\mu$ è quindi diagonalizzabile $\forall \mu$ e si ha quindi che: $$\chi_{S_\mu} (t) = t^{\frac{n(n+1)}{2}}(t-2\mu)^{\frac{n(n-1)}{2}}$$, $$m_{S_\mu} (t) = t (t-2\mu)$$
+	\end{enumerate}
+	
+\end{document}
