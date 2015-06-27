@@ -8,7 +8,7 @@
 	Sia $A \in \GL(n, \bbR)$ e definiamo $\forall X \in \kM(n,\bbR)$, $$ S_A(X) = {}^tXA - {}^tAX $$ \\
 	Dire per quali $A$, $S_A$ è diagonalizzabile e per questi valori calcolare polinomio minimo e caratteristico.
 	\begin{enumerate}
-		\item ({\it Molto difficile}) Supponendo che $S_A$ sia diagonalizzabile, ovvero che esista una base di autovettori tali che ${}^tXA - {}^tAX = \lambda X$, dimostrare che per $\lambda \neq 0$ deve necessariamente essere ${}^tX = -X$ (Se $X$ è autovettore).
+		\item Supponendo che $S_A$ sia diagonalizzabile, ovvero che esista una base di autovettori tali che ${}^tXA - {}^tAX = \lambda X$, dimostrare che per $\lambda \neq 0$ deve necessariamente essere ${}^tX = -X$ (Se $X$ è autovettore).
 		\item Dedurne quindi che $S_A\mid_{\Symm(n,\bbR)} \equiv 0$ (poiché le simmetriche devono essere tutte contenute nell'autospazio relativo a $0$, cioè nel Kernel).
 		\item Mostrare ora che questa ipotesi implica che $A$ sia simmetrica e che debba essere $AX = XA$ per ogni $X$ simmetrica.
 		\item Dedurne che le uniche matrici possibili sono $A = \mu I$.
@@ -38,11 +38,19 @@
 				quindi $S_A\mid_{\Symm(n,\bbR)} \equiv 0$.
 		\item Usando il fatto appena dimostrato, notiamo che $I$ è simmetrica e che quindi deve valere $S_A(I) = 0$, ovvero $A - {}^tA = 0$, quindi $A$ è simmetrica. \\
 			Si può quindi scrivere, $\forall X \in \Symm \quad 0 = {}^tXA - {}^tAX = XA - AX$, ovvero $A$ commuta con tutte le matrici simmetriche.
-		\item (Conti)
+		\item Usiamo il fatto che $A$ è simmetrica diagonalizzandola ortogonalmente. Sia $N \in \text{O }(n)$ una matrice tale che $NAN^{-1} = D$ diagonale. \\
+			Moltiplichiamo ora la relazione $AX = XA$ a destra per $N^{-1}$ e a sinistra per $N$, ottenendo $NAXN^{-1} = NXAN^{-1}$. Inoltre notiamo che l'applicazione $R(Y) = N^{-1} Y N = {}^tN Y N$ manda matrici simmetriche in
+				matrici simmetriche ed è biggettiva, quindi la relazione $\forall X \in \Symm \quad NAXN^{-1} = NXAN^{-1}$ equivale ad avere $\forall Y \in \Symm \quad NAN^{-1}YNN^{-1} = NN^{-1}YNAN^{-1} \implies DY = YD$. \\
+			Ci siamo quindi ridotti a cercare quali matrici diagonali $D$ commutano con tutte le matrici simmetriche. \\
+			Facciamo ora un po' di conti in notazione di Einstein. Siccome $D$ è diagonale vale $D_{ij} = \delta_{ij}D_{ij}$ dove con $\delta_{ij}$ si intende la delta di Kronecker. Cerchiamo quali matrici $X \in \kM(n, \bbR)$ commutano
+				con una matrice diagonale fissata. $$DX = XD \implies D_{ik}X_{kj} = X_{ik}D_{kj} \implies \delta_{ik}D_{ik}X_{kj} = X_{ik}\delta_{kj}D_{kj} \implies D_{ii}X_{ij} = X_{ij}D_{jj} \quad \forall i, j$$ \\
+				Quindi $\forall i,j$ si hanno le due alternative $X_{ij} = 0$ oppure $D_{ii} = D_{jj}$. Ciò significa che se la matrice $D$ ha almeno due autovalori distinti non può commutare con tutte le matrici simmetriche
+				(infatti per commutare sarebbero obbligate ad avere il numero zero in opportune celle). Ma allora la matrice $D$ ha tutti gli autovalori uguali, ovvero $D = \mu I$. \\
+			Allora $A = N^{-1}DN = N^{-1} \mu I N = \mu I$ quindi le uniche matrici che commutano con le matrici simmetriche sono i multipli dell'identità.
 		\item Se $A = \mu I$, abbiamo $S_\mu (X) = \mu ({}^tX - X)$, $\mu \neq 0$ ($A = 0 \not\in \GL(n, \bbR)$). Si considerino ora le matrici simmetriche e quelle antisimmetriche. \\
 			Se $Y \in \Symm(n, \bbR)$ si ha $S_\mu (Y) = \mu ({}^tY - Y) = 0$, quindi $S_\mu\mid_{\Symm} \equiv 0$. Se $Y \in \Asymm(n, \bbR)$ si ha $S_\mu(Y) = \mu ({}^tY - Y) = - 2\mu Y$,
-			quindi $S_\mu\mid_{\Asymm} \equiv 2\mu \Id$. \\
-			$S_\mu$ è quindi diagonalizzabile $\forall \mu$ e si ha quindi che: $$\chi_{S_\mu} (t) = t^{\frac{n(n+1)}{2}}(t-2\mu)^{\frac{n(n-1)}{2}}$$, $$m_{S_\mu} (t) = t (t-2\mu)$$
+				quindi $S_\mu\mid_{\Asymm} \equiv 2\mu \Id$. \\
+			$S_\mu$ è quindi diagonalizzabile $\forall \mu$ e si ha quindi che: $$\chi_{S_\mu} (t) = t^{\frac{n(n+1)}{2}}(t-2\mu)^{\frac{n(n-1)}{2}}$$ $$m_{S_\mu} (t) = t (t-2\mu)$$
 	\end{enumerate}
 	
 \end{document}
