@@ -9,19 +9,13 @@ all: pdf dvi ps
 	make clean
 
 ps: dvi
-	dvips BasiCicliche.dvi
-	dvips Errori.dvi
-	dvips GeometriaAffineEuclidea.dvi
+	dvips Compito.dvi
 
 dvi: download
-	latex --shell-escape BasiCicliche.tex
-	latex --shell-escape Errori.tex
-	latex --shell-escape GeometriaAffineEuclidea.tex
+	latex --shell-escape Compito.tex
 
 pdf: download
-	pdflatex --shell-escape BasiCicliche.tex
-	pdflatex --shell-escape Errori.tex
-	pdflatex --shell-escape GeometriaAffineEuclidea.tex
+	pdflatex --shell-escape Compito.tex
 
 # Dovremmo controllare che sia la versione più recente
 download:
