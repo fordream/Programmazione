@@ -1,6 +1,0 @@
-Nome giornale	Numero di copie da acquistare	Costo di ogni copia	Costo complessivo
-Il sole 24 ore	51	1.10	56.10
-Il vernacoliere	52	0.80	41.60
-Il fatto quotidiano	17	2.30	39.10
-The economist	16	1.15	18.40
-L'internazionale	33	3.05	100.65
