@@ -1,0 +1,144 @@
+%!PS-Adobe-2.0
+
+%%Pages: 2
+% Variabili da utilizzare come variabili "globali"
+/pageheight 780 def		% total page height
+/pagewidth 610 def		% total page width
+
+/leftpagemargin 72 def		% left page margin
+/rightpagemargin 36 def		% right page margin
+/toppagemargin 36 def		% top page margin
+/bottompagemargin 36 def		% bottom page margin
+
+/vpos pageheight toppagemargin sub def		% vertical position variable
+/hpos leftpagemargin def		% horizontal position
+
+/fontsize 15 def		% current font size
+/interlinea 1.5 def		% current interlinea
+/curfont /Times-Roman findfont 15 scalefont dup setfont def		% font corrente
+/indentamount 35 def		% how much to indent
+
+/wordbreak ( ) def		% Quando rompere le parole?
+
+/saveinternalvars {		% :
+	pageheight pagewidth
+	leftpagemargin rightpagemargin toppagemargin bottompagemargin
+	vpos hpos
+	fontsize interlinea curfont indentamount
+} def
+
+/getinternalvars {		% :
+	/indentamount exch def
+	/curfont exch def
+	/interlinea exch def
+	/fontsize exch def
+	
+	/hpos exch def
+	/vpos exch def
+
+	/bottompagemargin exch def
+	/toppagemargin exch def
+	/rightpagemargin exch def
+	/leftpagemargin exch def
+
+	/pagewidth exch def
+	/pageheight exch def
+} def
+
+/strcat {		% stack: (a) (b) => (ab)
+	exch dup length
+	2 index length add string
+	dup dup 4 2 roll copy length
+	4 -1 roll putinterval
+} bind def
+
+/BreakIntoLines {		% stack: textstring linewidth proc => ...
+	/proc exch def
+	/linewidth exch def
+	/textstring exch def
+
+	/breakwidth wordbreak stringwidth pop def
+	/curwidth 0 def
+	/lastwordbreak 0 def
+	/startchar 0 def
+	/restoftext textstring def
+
+	{ restoftext wordbreak search
+		{
+			/nextword exch def pop
+			/restoftext exch def
+			/wordwidth nextword stringwidth pop def
+	
+			curwidth wordwidth add linewidth gt
+				{ textstring startchar
+					lastwordbreak startchar sub
+					getinterval proc
+					/startchar lastwordbreak def
+					/curwidth wordwidth breakwidth add def }
+				{ /curwidth curwidth wordwidth add
+					breakwidth add def }
+				ifelse
+
+			/lastwordbreak lastwordbreak
+				nextword length add 1 add def
+		}
+		{ pop exit }
+		ifelse
+	} loop
+	/lastchar textstring length def
+	textstring startchar lastchar startchar sub
+		getinterval proc
+} def
+
+/usefont {		% stack: font pt => ...
+	dup /fontsize exch def	% Salviamo pt in /fontsize
+	exch findfont	% Lo troviamo
+	exch scalefont	% Lo riscaliamo come ci hanno chiesto
+	dup /curfont exch def	% Lo salviamo anche in /curfont
+	setfont
+	} def
+
+/newline {		% :
+	/vpos vpos interlinea fontsize mul sub def	% vpos -= fontsize*interlinea
+	/hpos leftpagemargin def	% mettiamo hpos all'inizio della riga
+	hpos vpos moveto	% posizioniamo il cursore
+	} def
+
+/newparagraph {		% :
+	newpath
+	/vpos vpos 2 interlinea mul fontsize mul sub def	% vpos -= 2*fontsize*interlinea
+	/hpos leftpagemargin indentamount add def	% hpos all'inizio della riga (indentato)
+	hpos vpos moveto	% posizioniamo il cursore
+	} def
+
+/begindocument {
+	newpath hpos vpos moveto
+	} def
+
+/printtext {		%stack: word => ...
+	dup stringwidth pop /hincrement exch def
+	hincrement hpos add pagewidth rightpagemargin sub le	% Controlliamo se c'è posto sulla riga corrente per stamparlo
+		{ show }	% Se si la stampiamo
+		{ newline show } ifelse	% Altrimenti andiamo nella riga successiva
+	/hpos hincrement hpos add def % ed incrementiamo /hpos
+	} def
+
+%%Page: 1 1
+/Times-Roman 15 usefont
+begindocument
+
+(Loltipo) length 10 string cvs show
+(Loltipo) 2 get 10 string cvs show
+/yline 300 def
+
+(Loltipo come si arriva a fare qualcosa di piu lungo di una riga? Non so se riusciro a scriverlo a mano, ma forse ci sono gia arrivato e non me ne sono accorto.) 300 { 72 yline moveto show /yline yline 18 sub def } BreakIntoLines
+showpage
+
+%%Page: 2 2
+begindocument
+	{pop 32 eq
+		{ (...) show } if
+	} (Come dovrebbe saltare fuori questa scritta?) kshow
+	
+	newparagraph
+showpage
