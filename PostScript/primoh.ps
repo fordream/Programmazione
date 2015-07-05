@@ -45,6 +45,23 @@
 	/pageheight exch def
 } def
 
+/getchar {		% stack: (string) index => ...
+		get 1 string exch 0 exch put
+	} def
+
+/printchar {		% stack: (string) index => ...
+		1 string dup 3 index 3 index get 0 exch put show pop pop
+	} def
+
+/PrintText {		% stack: (text) => ...
+	/textstring exch def
+	/fromi 0 def
+	/to 0 def
+	/curwidth 0 def
+	/lastspace 0 def
+	/maxwidth pagewidth leftpagemargin rightpagemargin add sub def
+	} def
+
 /strcat {		% stack: (a) (b) => (ab)
 	exch dup length
 	2 index length add string
@@ -98,6 +115,15 @@
 	setfont
 	} def
 
+/PrintWithSpace {		% stack: (string) spacewidth => ...
+		/spacewidth exch def
+		/textstring exch def
+		{ pop ( ) 0 get eq 
+			{ spacewidth ( ) stringwidth pop sub 0 rmoveto } % Se è uno spazio andiamo avanti del quantitativo di posto richiesto
+			if
+		} textstring kshow
+	} def
+
 /newline {		% :
 	/vpos vpos interlinea fontsize mul sub def	% vpos -= fontsize*interlinea
 	/hpos leftpagemargin def	% mettiamo hpos all'inizio della riga
@@ -123,9 +149,19 @@
 	/hpos hincrement hpos add def % ed incrementiamo /hpos
 	} def
 
+/inc {		% stack: /var => ...
+	dup load 1 add def } def
+
+/dec {		% stack: /var => ...
+	dup load 1 sub def } def
+
+/number {		% stack: /var => ...
+	load 20 string cvs show } def
+
 %%Page: 1 1
 /Times-Roman 15 usefont
 begindocument
+
 
 (Loltipo) length 10 string cvs show
 (Loltipo) 2 get 10 string cvs show
@@ -139,6 +175,8 @@ begindocument
 	{pop 32 eq
 		{ (...) show } if
 	} (Come dovrebbe saltare fuori questa scritta?) kshow
+newline
+
 	
 	newparagraph
 showpage
