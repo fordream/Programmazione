@@ -1,0 +1,7 @@
+Basta che apriate i due file csv con Excel (o Openoffice Calc), li compiliate con i dati che vi servono
+e poi da terminale eseguiate il comando:
+
+	ruby giornali.rb
+
+Al che verrà eseguito il programma. Se trova degli errori vi avvisa, altrimenti compila correttamente e
+vi restituisce un file .csv ed un file .pdf
